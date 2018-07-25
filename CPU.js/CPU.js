@@ -12,9 +12,6 @@ class Slide{
 		this.sentence = new Array();
 		this.level = new Array();
 		this.type = type;
-		this.backgroundColor = "#FFFFFF";
-		this.mainColor = "#31394d";
-		this.accentColor = "#FF0000";
 	}
 	setTitle(title){
 		this.title = title;
@@ -22,6 +19,21 @@ class Slide{
 	addSentence(level,sentence){
 		this.level.push(level);
 		this.sentence.push(sentence);
+	}
+	clearSentence(){
+		this.level = new Array();
+		this.sentence = new Array();
+	}
+	show(){
+		console.log("CPUException : show() is not override");
+	}
+}
+class SlideDark extends Slide{
+	constructor(type){
+		super(type);
+		this.backgroundColor = "#FFFFFF";
+		this.mainColor = "#31394d";
+		this.accentColor = "#FF0000";
 	}
 	show(){
 		let form = document.body;
@@ -57,7 +69,21 @@ class Slide{
 				ctx.fillText(this.sentence[i],width - 50,height - 150 + i * 40);
 			}
 		}else if(this.type == TYPE.SUB_TITLE){
+			ctx.fillStyle = this.backgroundColor;
+			ctx.fillRect(0,0,width,height);
+			ctx.fillStyle = this.mainColor;
+			ctx.fillRect(0,height - 40,width,height);
+			
+			ctx.textAlign = "left";
+			ctx.font = "70px 'ＭＳ Ｐゴシック'";
+			ctx.fillStyle = this.mainColor;
+			ctx.fillText(this.title,50,height / 2);
 
+			ctx.font = "40px 'ＭＳ Ｐ明朝体'";
+			ctx.fillStyle = this.backgroundColor;
+			for(i = 0;i < this.sentence.length;i++){
+				ctx.fillText(this.sentence[i],50 + 50 * this.level[i],height / 2 + 70 + i * 40);
+			}
 		}else if(this.type == TYPE.CONTENTS){
 			ctx.fillStyle = this.backgroundColor;
 			ctx.fillRect(0,0,width,height);
@@ -79,8 +105,8 @@ class Slide{
 			
 			ctx.fillStyle = this.mainColor;
 			for(i = 0;i < this.sentence.length;i++){
-				ctx.font = (40 - 8 * this.level[i]) + "px 'ＭＳ Ｐ明朝体'";
-				ctx.fillText(this.sentence[i],width / 2 + 10 + 40 * this.level[i],100 + i * 40);
+				ctx.font = (45 - 10 * this.level[i]) + "px 'ＭＳ Ｐ明朝体'";
+				ctx.fillText(this.sentence[i],width / 2 + 10 + 50 * this.level[i],100 + i * 50);
 			}
 		}else if(this.type == TYPE.SUMMARY){
 			
