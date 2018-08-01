@@ -2,24 +2,25 @@ var arg = new Object;
 var pair=location.search.substring(1).split('&');
 for(var i=0;pair[i];i++) {
     var kv = pair[i].split('=');
-    arg[kv[0]]=kv[1];
+    arg[kv[0]]=parseInt(kv[1]);
 }
 
 function init(){
-	
-	if(arg.id=="0" || arg.id == null){
+	if(arg.id=="0" || arg.id==null){
 		theme = new SlideDark(TYPE.TITLE);
 		theme.setTitle("自作CPUの紹介");
 	
 		theme.addSentence(0,"ソフトウェア情報学部ソフトウェア情報学科");
 		theme.addSentence(0,"小山 海渡");
+
 		theme.show();
-	
+
 		document.onkeydown = function(e){
 			if(e.keyCode == 39)
 				window.location.href = window.location.pathname + "?id=1";
 		}
-	}else if(arg.id=="1"){
+	}
+	if(arg.id=="1"){
 		theme = new SlideDark(TYPE.CONTENTS);
 		theme.setTitle("自己紹介");
 	
@@ -132,9 +133,33 @@ function init(){
 				theme.show();
 		
 			}else if(e.keyCode == 39 && count == 1){
-				window.location.href = window.location.pathname + "?id=6";
+				window.location.href = window.location.pathname + "?id=5.5";
 			}else if(e.keyCode == 37)
 				window.location.href = window.location.pathname + "?id=4";
+		}
+	}else if(arg.id=="5.5"){
+		let count = 0;
+		theme = new SlideDark(TYPE.CONTENTS);
+		theme.setTitle("実践編");
+	
+		theme.br(4);
+		theme.addSentence(0,"Canvas ");
+		theme.addSentence(0,"Presentation ");
+		theme.addSentence(0,"Unit");
+
+		theme.show();
+		document.onkeydown = function(e){
+			if(e.keyCode == 39 && count == 0){
+				theme.addSentence(0,"");
+				theme.addSentence(1,"Webサイトでプレゼンテーション");
+				theme.addSentence(1,"をするライブラリ");
+				count++;
+				theme.show();
+		
+			}else if(e.keyCode == 39 && count == 1){
+				window.location.href = window.location.pathname + "?id=6";
+			}else if(e.keyCode == 37)
+				window.location.href = window.location.pathname + "?id=5";
 		}
 	}else if(arg.id=="6"){
 		let count = 0;
@@ -158,7 +183,7 @@ function init(){
 			}else if(e.keyCode == 39 && count == 1){
 				window.location.href = window.location.pathname + "?id=7";
 			}else if(e.keyCode == 37)
-				window.location.href = window.location.pathname + "?id=5";
+				window.location.href = window.location.pathname + "?id=5.5";
 		}
 	}else if(arg.id=="7"){
 		let count = 0;
