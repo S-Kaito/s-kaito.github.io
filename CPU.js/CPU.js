@@ -1,9 +1,22 @@
-
+var main = null;
 var TYPE = {
 	TITLE : 0,
 	SUB_TITLE : 1,
 	CONTENTS : 2,
 	SUMMARY : 9
+}
+function actionKeyDown(e){
+	console.log(typeof this.onNext);
+	if(e.keyCode == 39)
+		main.onNext(e);
+	else if(e.keyCode == 37)
+		main.onPrevious(e);
+}
+function actionTouchStart(e){
+	if(e.changedTouches[0].pageX >= window.parent.screen.width / 2)
+		main.onNext(e);
+	else if(e.changedTouches[0].pageX < window.parent.screen.width / 2)
+		main.onPrevious(e);
 }
 class Controller{
 	constructor(){
@@ -30,13 +43,23 @@ class Slide{
 		this.sentence = new Array();
 		this.level = new Array();
 		this.type = type;
-		this.onKeyDown = null;
+		this.onNext = function(e){};
+		this.onPrevious = function(e){};
+		document.onkeydown = function(e){
+			actionKeyDown(e);
+		}
+		document.ontouchstart = function(e){
+			actionTouchStart(e);
+		}
 	}
 	setTitle(title){
 		this.title = title;
 	}
-	setOnKeyDown(func){
-		this.onKeyDown = func;
+	setOnNext(func){
+		this.onNext = func;
+	}
+	setOnPrevious(func){
+		this.onPrevious = func;
 	}
 	addSentence(level,sentence){
 		this.level.push(level);
@@ -51,10 +74,10 @@ class Slide{
 	}
 	br(count){
 		for(i = 0;i < count;i++)
-			addSentence(0,"");
+			this.addSentence(0,"");
 	}
 	show(){
-		console.log("CPUException : show() is not override");
+		main = this;
 	}
 }
 class SlideDark extends Slide{
@@ -65,6 +88,7 @@ class SlideDark extends Slide{
 		this.accentColor = "#FF0000";
 	}
 	show(){
+		super.show();
 		let form = document.body;
 		form.style.overflow = "hidden";
 		form.style.margin = "0px 0px 0px 0px";
