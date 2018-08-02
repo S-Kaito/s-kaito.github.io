@@ -6,7 +6,6 @@ var TYPE = {
 	SUMMARY : 9
 }
 function actionKeyDown(e){
-	console.log(typeof this.onNext);
 	if(e.keyCode == 39)
 		main.onNext(e);
 	else if(e.keyCode == 37)
@@ -38,13 +37,23 @@ class Controller{
 }
 class Slide{
 	constructor(type){
-		this.canvas = null;
 		this.title="";
 		this.sentence = new Array();
 		this.level = new Array();
 		this.type = type;
 		this.onNext = function(e){};
 		this.onPrevious = function(e){};
+
+		let form = document.body;
+		form.style.overflow = "hidden";
+		form.style.margin = "0px 0px 0px 0px";
+		var width = window.parent.screen.width;
+		var height = window.parent.screen.height;
+		console.log(width + " " + height);
+		form.innerHTML = "<canvas id=\"background\" width=\"" + width + "\" height=\"" + height + "\"" + "></canvas>";
+		var ctx = document.getElementById('background').getContext('2d');
+		this.ctx = ctx;
+		
 		document.onkeydown = function(e){
 			actionKeyDown(e);
 		}
@@ -69,9 +78,6 @@ class Slide{
 		this.level = new Array();
 		this.sentence = new Array();
 	}
-	br(){
-		br(1);
-	}
 	br(count){
 		for(i = 0;i < count;i++)
 			this.addSentence(0,"");
@@ -89,15 +95,10 @@ class SlideDark extends Slide{
 	}
 	show(){
 		super.show();
-		let form = document.body;
-		form.style.overflow = "hidden";
-		form.style.margin = "0px 0px 0px 0px";
 		
 		var width = window.parent.screen.width;
 		var height = window.parent.screen.height;
-		console.log(width + " " + height);
-		form.innerHTML = "<canvas id=\"background\" width=\"" + width + "\" height=\"" + height + "\"" + "></canvas>";
-		var ctx = document.getElementById('background').getContext('2d');
+		var ctx = this.ctx;
 		if(width > 499){
 			if(this.type==TYPE.TITLE){
 				ctx.fillStyle = this.backgroundColor;
@@ -138,9 +139,9 @@ class SlideDark extends Slide{
 					ctx.fillText(this.sentence[i],50 + 50 * this.level[i],height / 2 + 70 + i * 40);
 				}
 			}else if(this.type == TYPE.CONTENTS){
-				ctx.fillStyle = this.backgroundColor;
+				/*ctx.fillStyle = this.backgroundColor;
 				ctx.fillRect(0,0,width,height);
-				ctx.fillStyle = this.mainColor;
+				*/ctx.fillStyle = this.mainColor;
 				ctx.fillRect(0,0,width / 20 * 9,height);
 				
 				ctx.strokeStyle = this.backgroundColor;
