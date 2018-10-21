@@ -1,0 +1,12 @@
+body{
+	background-color: #282923;
+	font-family: "Cambria";
+}
+.main{
+	background-color: #FCFCFC;
+	border: #000000 solid 1px;
+	margin: 0 auto;
+	padding: 50px;
+	width: 800px;
+
+}
