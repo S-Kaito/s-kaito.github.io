@@ -8,7 +8,6 @@ details {
     border-radius: 4px;
     padding: .5em .5em 0;
 }
-
 summary {
     font-weight: bold;
     margin: -.5em -.5em 0;
@@ -24,11 +23,18 @@ details[open] summary {
     margin-bottom: .5em;
 }
 
-pre button{
-	text-align: left;
-}
 code{
 	font-family: Consolas;
+}
+pre{
+	background-color: #F5F5F5;
+	border: 1px solid #aaa;
+    overflow-x: scroll;
+}
+img {
+	width:100%;
+	max-width: 100%;
+	height: auto;
 }
 .main{
 	background-color: #FCFCFC;
@@ -42,4 +48,11 @@ code{
 	padding-top: 10px;
 	padding-bottom: 10px;
 	text-align: center;
+}
+@media screen and (max-width: 600px) {
+     
+    .main{
+    	padding: 20px;
+    	width: 85%;
+    }
 }
