@@ -26,16 +26,6 @@ details[open] summary {
 code{
 	font-family: Consolas;
 }
-pre{
-	background-color: #F5F5F5;
-	border: 1px solid #aaa;
-    overflow-x: scroll;
-}
-img {
-	width:100%;
-	max-width: 100%;
-	height: auto;
-}
 .main{
 	background-color: #FCFCFC;
 	border: #000000 solid 1px;
@@ -49,10 +39,20 @@ img {
 	padding-bottom: 10px;
 	text-align: center;
 }
-@media screen and (max-width: 600px) {
+.source{
+	background-color: #F5F5F5;
+	border: 1px solid #aaa;
+    overflow-x: scroll;
+}
+@media screen and (max-width: 500px) {
      
     .main{
     	padding: 20px;
     	width: 85%;
     }
+    img {
+		width:100%;
+		max-width: 100%;
+		height: auto;
+	}
 }

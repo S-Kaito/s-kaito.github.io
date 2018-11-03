@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-INPUT_DATA = (np.arange(0 ,np.pi*2 ,0.1)-np.pi)/np.pi
+INPUT_DATA = np.linspace(-1.0,1.0,100)
 WEIGHT = 0.1
 
 class Layer:
