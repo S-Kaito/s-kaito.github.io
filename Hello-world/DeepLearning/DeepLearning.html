@@ -144,11 +144,8 @@ print(layer.w)
 
 plt.scatter(plot_x, plot_y, marker="+")
 plt.show()
-</code>	</pre>
+</code></pre>
 			</details>
-			<div>
-				First, I'll explain Layer class and MiddleLayer class which important part of this source code.
-			</div>
 			<pre class="source"><code>
 class Layer:
     def __init__(this,input_num,output_num):
@@ -163,6 +160,10 @@ class MiddleLayer(Layer):
         super().forward(x)
         this.y = 1/(1+(np.exp(-this.y)))	
 </code></pre>
+			<div>
+				First, I'll explain Layer class and MiddleLayer class which important part of this source code. All layers perform the same operation. So, MiddleLayer class and OutputLayer is extended Layer class. (If you can't understand that I said, I want you to study about extension.When I speak real intention, I do not want to explain it.) __init__ method is the constructor which define first neuron's condition. this.w is weight (Look at Figure02 or Figure03). this.b is bias. They have not learned yet. They are learning when neural network does back propagation. Next, foward method is to do propagation. When Layer class calls foward function, it's doing propagation with identity function. But MiddleLayer doing with figmoid function. It's as stipulated by the conditions. 
+			</div>
+
 			<div>
 				
 			</div>
