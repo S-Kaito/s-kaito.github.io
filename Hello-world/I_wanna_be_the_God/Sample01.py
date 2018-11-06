@@ -68,7 +68,7 @@ for j in range(EPOCH):
     action.append(np.argmax(brain[4].y))
 
     args = np.zeros(5)
-
+    a = np.zeros(5)
     if action[-1] == 0:
         y -= 1
     elif action[-1] == 1:
@@ -80,9 +80,7 @@ for j in range(EPOCH):
     else:
         point += MAP[x][y]
         args[4] += MAP[x][y] / 10
-        a = np.zeros(5)
         a[action[-2]] += MAP[x][y] / 15
-        args[action[-3]] += MAP[x][y] / 20
         MAP[x][y] = 0
 
     args[action[-1]] -= 0.5
@@ -90,10 +88,19 @@ for j in range(EPOCH):
     brain[4].backward(args)
     for i in range(3,-1,-1):
         brain[i].backward(brain[i + 1].grad_x)
-
     for i in brain:
         i.update()
+    
+    print(args,a)
 
+    brain[0].forward(memory[-2])
+    for i in range(1,5):
+        brain[i].forward(brain[i - 1].y)
+    brain[4].backward(a)
+    for i in range(3,-1,-1):
+        brain[i].backward(brain[i + 1].grad_x)
+    for i in brain:
+        i.update()
 
     if j % (EPOCH / 20) == 0:
         print()
@@ -102,7 +109,6 @@ for j in range(EPOCH):
         print(brain[4].b)
         plot_x.append(j)
         plot_y.append(point)
-        np.savetxt("map.txt",MAP)
 
     MAP[0:5,0:99] = -5
     MAP[95:99,0:99] = -5

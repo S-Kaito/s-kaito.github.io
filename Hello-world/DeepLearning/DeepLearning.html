@@ -85,7 +85,7 @@
 			</div>
 				&nbsp;Propagation is trying achievement of learning. Against, backpropagation is learning from difference of error with answer. 
 			<h2>
-				Let's implement
+				Let's implement (propagation edition)
 			</h2>
 			<div>
 				I'll implement for demonstration of propagation. This time I think I use simple network. Show Figure08. Maybe, you might think that is too simple. But even it can express things such as sin function , cos function and so on. Seeing is believing. Let's implement. Sample01 is source code.
@@ -146,6 +146,9 @@ plt.scatter(plot_x, plot_y, marker="+")
 plt.show()
 </code></pre>
 			</details>
+			<div>
+				The first, I'll explain Layer class and MiddleLayer class which important part of this source code. All layers perform the same operation. So, MiddleLayer class and OutputLayer is extended Layer class. (If you can't understand that I said, I want you to study about extension.When I speak real intention, I do not want to explain it.) __init__ method is the constructor which define first neuron's condition. this.w is weight (Look at Figure02 or Figure03). this.b is bias. They have not learned yet. They are learning when neural network does back propagation. Next, foward method is to do propagation. When Layer class calls foward function, it's doing propagation with identity function. But MiddleLayer doing with figmoid function. It's as stipulated by the conditions. 
+			</div>
 			<pre class="source"><code>
 class Layer:
     def __init__(this,input_num,output_num):
@@ -158,14 +161,11 @@ class Layer:
 class MiddleLayer(Layer):
     def forward(this,x):
         super().forward(x)
-        this.y = 1/(1+(np.exp(-this.y)))	
+        this.y = 1/(1+(np.exp(-this.y)))
+
 </code></pre>
 			<div>
-				First, I'll explain Layer class and MiddleLayer class which important part of this source code. All layers perform the same operation. So, MiddleLayer class and OutputLayer is extended Layer class. (If you can't understand that I said, I want you to study about extension.When I speak real intention, I do not want to explain it.) __init__ method is the constructor which define first neuron's condition. this.w is weight (Look at Figure02 or Figure03). this.b is bias. They have not learned yet. They are learning when neural network does back propagation. Next, foward method is to do propagation. When Layer class calls foward function, it's doing propagation with identity function. But MiddleLayer doing with figmoid function. It's as stipulated by the conditions. 
-			</div>
-
-			<div>
-				
+				The next, I'll explain calcation of neuron.
 			</div>
 			<pre class="source"><code>
 layer.w = np.array([[ 1.5226207,-4.74313941,-5.09765436]])
@@ -173,6 +173,7 @@ layer.b = np.array([ 0.05025657,0.25530377,-1.12453411])
 
 output.w = np.array([9.01367277,5.04463465,1.2634446 ])
 output.b = np.array([-7.73053153])
+
 </code></pre>
 		</div>
 </body>
