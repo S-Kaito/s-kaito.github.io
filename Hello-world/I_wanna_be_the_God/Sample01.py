@@ -107,7 +107,7 @@ class Creat:
             np.savetxt('w0' + str(i) + '.csv', this.brain[i].w, delimiter=',')
             np.savetxt('b0' + str(i) + '.csv', this.brain[i].b, delimiter=',')
 
-creat = Creat([LayerSigmoid(25,10),LayerIdentity(10,5)])
+creat = Creat([LayerSigmoid(25,10),LayerSoftmax(10,5)])
 
 x = 50
 y = 50
@@ -137,20 +137,19 @@ for j in range(EPOCH):
         creat.learn(MAP[x][y])
         MAP[x][y] = 0
 
+    if j % (EPOCH / 100) == 0:
+        plot_x.append(j)
+        plot_y.append(point)
     if j % (EPOCH / 50) == 0:
         print()
         print(j," / ",EPOCH,"  POINT:",point,"/",ANS)
         print(MAP[x - 2:x + 3,y - 2:y + 3])
         #print(creat.brain[-1].y,np.argmax(creat.brain[-1].y))
-        plot_x.append(j)
-        plot_y.append(point)
-
-    if j % 20 == 0:
-        MAP += np.random.randint(0,1,(1000,1000))
-    MAP[0:5,0:-5] = -99
-    MAP[-10:-5,0:-5] = -99
-    MAP[0:-5,0:5] = -99
-    MAP[0:-5,-10:-5] = -99
+        
+    MAP[0:5,0:-5] = -20
+    MAP[-10:-5,0:-5] = -20
+    MAP[0:-5,0:5] = -20
+    MAP[0:-5,-10:-5] = -20
     MAP[MAP > 20] = 20
 
 print(np.sum(MAP[5:95,5:95]),"/",ANS)
