@@ -165,8 +165,21 @@ class MiddleLayer(Layer):
 
 </code></pre>
 			<div>
-				The next, I'll explain calcation of neuron.
+				The next, I'll explain calcation of neuron. It's easy to use matrix calcation. Propagation can be impermented with this source code. It calcates Figure03.
 			</div>
+			<pre class="source"><code>
+this.y = np.dot(x,this.w) + this.b
+
+</code></pre>
+			<pre class="source"><code>
+layer.w = np.array([[ 5,2,-5]])
+layer.b = np.array([ 0.1,0.2,-1])
+
+output.w = np.array([9,3,4])
+output.b = np.array([-5])
+
+</code></pre>
+</code></pre>
 			<pre class="source"><code>
 layer.w = np.array([[ 1.5226207,-4.74313941,-5.09765436]])
 layer.b = np.array([ 0.05025657,0.25530377,-1.12453411])

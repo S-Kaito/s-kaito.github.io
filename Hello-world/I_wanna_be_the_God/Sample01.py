@@ -3,20 +3,31 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-WEIGHT = 0.1
-EPOCH = 1000
-MAP = np.random.randint(0,100,(100,100))
-ANS = np.sum(MAP)
-MAP[0:5,0:99] = -5
-MAP[95:99,0:99] = -5
-MAP[0:99,0:5] = -5
-MAP[0:99,95:99] = -5
+WEIGHT = 0.01
+ETA = 0.1
+EPOCH = 10000
+MAP = np.random.randint(0,20,(1000,1000))
+ANS = np.sum(MAP[5:-5,5:-5])
+MAP[0:5,0:-5] = -99
+MAP[-10:-5,0:-5] = -99
+MAP[0:-5,0:5] = -99
+MAP[0:-5,-10:-5] = -99
 
 class Layer:
     def __init__(this,input_num,output_num):
-        this.w = WEIGHT * np.random.randn(input_num,output_num)
-        this.b = WEIGHT * np.random.randn(output_num)
-        
+       this.w = WEIGHT * np.random.randn(input_num,output_num)
+       this.b = WEIGHT * np.random.randn(output_num)
+
+    def forward(this,x):
+        ()
+    def backward(this,x):
+        ()
+    def update(this):
+        this.w -= this.grad_w * ETA
+        this.b -= this.grad_b * ETA
+
+    
+class LayerIdentity(Layer):
     def forward(this,x):
         this.x = x
         this.y = np.dot(x,this.w) + this.b
@@ -29,13 +40,10 @@ class Layer:
 
         this.grad_x = np.dot(delta,this.w.T)
 
-    def update(this):
-        this.w -= this.grad_w * WEIGHT
-        this.b -= this.grad_b * WEIGHT
-
-class MiddleLayer(Layer):
+class LayerSigmoid(Layer):
     def forward(this,x):
-        super().forward(x)
+        this.x = x
+        this.y = np.dot(x,this.w) + this.b
         this.y = 1/(1+(np.exp(-this.y)))
 
     def backward(this,x):  
@@ -46,77 +54,106 @@ class MiddleLayer(Layer):
 
         this.grad_x = np.dot(delta,this.w.T)
 
-brain = []
-brain.append(MiddleLayer(25,10))
-brain.append(MiddleLayer(10,10))
-brain.append(MiddleLayer(10,10))
-brain.append(MiddleLayer(10,10))
-brain.append(Layer(10,5))
+
+class LayerSoftmax(Layer):
+    def forward(this,x):
+        this.x = x
+        this.y = np.dot(x,this.w) + this.b
+        this.y = np.exp(this.y)/(np.sum(np.exp(this.y),axis=1,keepdims=True) + 1)
+
+    def backward(this,x):  
+        delta = this.y - x
+
+        this.grad_w = np.dot(this.x.T,delta)
+        this.grad_b = np.sum(delta,axis=0)
+
+        this.grad_x = np.dot(delta,this.w.T)
+
+class Creat:
+    def __init__(this,brain):
+        this.brain = brain
+        this.map = [np.zeros((1,25)),np.zeros((1,25)),np.zeros((1,25)),np.zeros((1,25))]
+        this.action = [0,1,2,3]
+
+    def forward(this,x):
+        this.brain[0].forward(x)
+        for i in range(1,len(this.brain)):
+            this.brain[i].forward(this.brain[i - 1].y)
+        return this.brain[-1].y
+
+    def backward(this,x):
+        this.brain[-1].backward(x)
+        for i in range(len(this.brain) - 2,-1,-1):
+            this.brain[i].backward(this.brain[i + 1].grad_x)
+
+    def update(this):
+        for i in this.brain:
+            i.update()
+
+    def memory(this,map,action):
+        this.map.append(map)
+        this.action.append(action)
+
+    def learn(this,point):
+        for i in range(1,4):
+            a = np.zeros(5)
+            a[this.action[-i]] += point / ((i) * 5)
+            this.forward(this.map[-i])
+            this.backward(a)
+            this.update()
+
+    def save(this):
+        for i in range(0,len(this.brain)):
+            np.savetxt('w0' + str(i) + '.csv', this.brain[i].w, delimiter=',')
+            np.savetxt('b0' + str(i) + '.csv', this.brain[i].b, delimiter=',')
+
+creat = Creat([LayerSigmoid(25,10),LayerIdentity(10,5)])
 
 x = 50
 y = 50
 point = 0
-action = [0,1,2,3,4]
-memory = [np.zeros(25) * 5]
 plot_x = []
 plot_y = []
+
 for j in range(EPOCH):
-    memory.append(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25))
-    brain[0].forward(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25))
-    for i in range(1,5):
-        brain[i].forward(brain[i - 1].y)
-    action.append(np.argmax(brain[4].y))
+    #print(MAP[x - 2:x + 3,y - 2:y + 3],creat.action[-1])
+    creat.forward(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25))
+    creat.memory(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25),np.random.choice(np.array([0,1,2,3,4]), 1, p= (np.exp(creat.brain[-1].y)/np.sum(np.exp(creat.brain[-1].y))).reshape(-1)))
 
     args = np.zeros(5)
-    a = np.zeros(5)
-    if action[-1] == 0:
+    args[creat.action[-1]] -= 0.05
+    creat.backward(args)
+    creat.update()
+    if creat.action[-1] == 0:
         y -= 1
-    elif action[-1] == 1:
+    elif creat.action[-1] == 1:
         y += 1
-    elif action[-1] == 2:
+    elif creat.action[-1] == 2:
         x += 1
-    elif action[-1] == 3:
+    elif creat.action[-1] == 3:
         x -= 1
-    else:
+    elif creat.action[-1] == 4:
         point += MAP[x][y]
-        args[4] += MAP[x][y] / 10
-        a[action[-2]] += MAP[x][y] / 15
+        creat.learn(MAP[x][y])
         MAP[x][y] = 0
 
-    args[action[-1]] -= 0.5
-    
-    brain[4].backward(args)
-    for i in range(3,-1,-1):
-        brain[i].backward(brain[i + 1].grad_x)
-    for i in brain:
-        i.update()
-    
-    print(args,a)
-
-    brain[0].forward(memory[-2])
-    for i in range(1,5):
-        brain[i].forward(brain[i - 1].y)
-    brain[4].backward(a)
-    for i in range(3,-1,-1):
-        brain[i].backward(brain[i + 1].grad_x)
-    for i in brain:
-        i.update()
-
-    if j % (EPOCH / 20) == 0:
+    if j % (EPOCH / 50) == 0:
         print()
-        print(j + (EPOCH / 20)," / ",EPOCH,"  POINT:",point)
+        print(j," / ",EPOCH,"  POINT:",point,"/",ANS)
         print(MAP[x - 2:x + 3,y - 2:y + 3])
-        print(brain[4].b)
+        #print(creat.brain[-1].y,np.argmax(creat.brain[-1].y))
         plot_x.append(j)
         plot_y.append(point)
 
-    MAP[0:5,0:99] = -5
-    MAP[95:99,0:99] = -5
-    MAP[0:99,0:5] = -5
-    MAP[0:99,95:99] = -5
-    MAP[6:94,6:94] += 1
-    MAP[MAP > 99] = 99
+    if j % 20 == 0:
+        MAP += np.random.randint(0,1,(1000,1000))
+    MAP[0:5,0:-5] = -99
+    MAP[-10:-5,0:-5] = -99
+    MAP[0:-5,0:5] = -99
+    MAP[0:-5,-10:-5] = -99
+    MAP[MAP > 20] = 20
 
-print(ANS - np.sum(MAP),"/",ANS)
+print(np.sum(MAP[5:95,5:95]),"/",ANS)
+creat.save()
 plt.scatter(plot_x,plot_y,marker="+")
 plt.show()
