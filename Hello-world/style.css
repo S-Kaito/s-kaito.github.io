@@ -23,12 +23,21 @@ details[open] summary {
     margin-bottom: .5em;
 }
 
+pre{
+	padding-left: 15px;
+	position: relative;
+}
+pre .title{
+	font-family: "Cambria";
+    font-weight: bold;
+	position: absolute;
+	top:0px;
+	right:0px;
+}
 code{
 	font-family: Consolas;
 }
-pre{
-	padding-left: 15px;
-}
+
 .main{
 	background-color: #FCFCFC;
 	border: #000000 solid 1px;
@@ -46,6 +55,9 @@ pre{
 	background-color: #F5F5F5;
 	border: 1px solid #aaa;
     overflow-x: scroll;
+}
+.source-title{
+	text-align: center;
 }
 @media screen and (max-width: 500px) {
      

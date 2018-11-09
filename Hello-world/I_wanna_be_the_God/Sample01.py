@@ -5,9 +5,19 @@ import matplotlib.animation as animation
 
 WEIGHT = 0.01
 ETA = 0.1
-EPOCH = 5000
+EPOCH = 10000
+
 MAP = np.random.randint(-10,20,(100,100))
-ANS = np.sum(MAP[5:-5,5:-5])
+ANS = np.sum(MAP[MAP > 0])
+
+creat = None
+x = 50
+y = 50
+point = 0
+plot_x = []
+plot_y = []
+death = []
+deathCount = 0
 
 class Layer:
     def __init__(this,input_num,output_num):
@@ -108,53 +118,74 @@ class Creat:
             this.brain[i].w = np.loadtxt('w0' + str(i) + '.csv', delimiter=',')
             this.brain[i].b = np.loadtxt('b0' + str(i) + '.csv', delimiter=',')
 
-creat = Creat([LayerSigmoid(49,50),LayerSigmoid(50,50),LayerSoftmax(50,5)])
-creat.load()
-x = 50
-y = 50
-point = 0
-plot_x = []
-plot_y = []
+def run():
+    MAP = np.random.randint(-10,20,(100,100))
+    ANS = np.sum(MAP[10:-10,10:-10])
 
-for j in range(EPOCH):
-    #print(MAP[x - 2:x + 3,y - 2:y + 3],creat.action[-1])
-    creat.forward(np.array(MAP[x - 3:x + 4,y - 3:y + 4]).reshape(1,49)/20)
-    creat.memory(np.array(MAP[x - 3:x + 4,y - 3:y + 4]).reshape(1,49)/20,np.random.choice(np.array([0,1,2,3,4]), 1, p= (np.exp(creat.brain[-1].y)/np.sum(np.exp(creat.brain[-1].y))).reshape(-1)))
+    creat = Creat([LayerSigmoid(49,50),LayerSigmoid(50,50),LayerSigmoid(50,50),LayerSoftmax(50,5)])
+    creat.load()
+    x = 50
+    y = 50
+    point = 0
+    plot_x = []
+    plot_y = []
+    death = []
+    deathCount = 0
+    for j in range(EPOCH):
+        creat.forward(np.array(MAP[x - 3:x + 4,y - 3:y + 4]).reshape(1,49)/20)
+        creat.memory(np.array(MAP[x - 3:x + 4,y - 3:y + 4]).reshape(1,49)/20,np.random.choice(np.array([0,1,2,3,4]), 1, p= (np.exp(creat.brain[-1].y)/np.sum(np.exp(creat.brain[-1].y))).reshape(-1)))
 
-    args = np.zeros(5)
-    args[creat.action[-1]] -= 0.01
-    creat.backward(args)
-    creat.update()
-    if creat.action[-1] == 0:
-        y -= 1
-    elif creat.action[-1] == 1:
-        y += 1
-    elif creat.action[-1] == 2:
-        x += 1
-    elif creat.action[-1] == 3:
-        x -= 1
-    elif creat.action[-1] == 4:
-        point += MAP[x][y]
-        creat.learn(MAP[x][y]/20)
-        MAP[x][y] = 0
+        args = np.zeros(5)
+        args[creat.action[-1]] -= 0.01
+        creat.backward(args)
+        creat.update()
+        if creat.action[-1] == 0:
+            y -= 1
+        elif creat.action[-1] == 1:
+            y += 1
+        elif creat.action[-1] == 2:
+            x += 1
+        elif creat.action[-1] == 3:
+            x -= 1
+        elif creat.action[-1] == 4:
+            point += MAP[x][y]
+            creat.learn(MAP[x][y]/20)
+            MAP[x][y] = 0
 
-    if j % (EPOCH / 100) == 0:
-        plot_x.append(j)
-        plot_y.append(point)
-    if j % (EPOCH / 50) == 0:
-        print()
-        print(j," / ",EPOCH,"  POINT:",point,"/",ANS)
-        print(np.array(MAP[x - 3:x + 4,y - 3:y + 4]))
-        #print(creat.brain[-1].y,np.argmax(creat.brain[-1].y))
-        
-    MAP[0:5,:] = -20
-    MAP[-5:,:] = -20
-    MAP[:,0:5] = -20
-    MAP[:,-5:] = -20
-    MAP[MAP > 20] = 20
+        if (x == 8 or x == 91) or (y == 8 or y == 91):
+            args = np.zeros(5)
+            args[creat.action[-1]] -= 5
+            creat.backward(args)
+            creat.update()
+            x = 50
+            y = 50
+            deathCount += 1
+            
+        if j % (EPOCH / 100) == 0:
+            plot_x.append(j)
+            plot_y.append(point)
+            death.append(deathCount * 100)
+        if j % (EPOCH / 50) == 0:
+            print()
+            print(j," / ",EPOCH,"  POINT:",point,"/",ANS," DEATH:",deathCount)
+            print(np.array(MAP[x - 3:x + 4,y - 3:y + 4]))
+            #print(creat.brain[-1].y,np.argmax(creat.brain[-1].y))
+            
+        MAP[0:10,:] = -20
+        MAP[-10:,:] = -20
+        MAP[:,0:10] = -20
+        MAP[:,-10:] = -20
+        MAP[MAP > 20] = 20
 
-print(np.sum(MAP[5:95,5:95]),"/",ANS)
-print(MAP)
-creat.save()
-plt.scatter(plot_x,plot_y,marker="+")
-plt.show()
+    print(np.sum(MAP[MAP > 0]),"/",ANS)
+    print(MAP)
+    creat.save()
+    plt.scatter(plot_x,plot_y,marker="+")
+    plt.scatter(plot_x,death,marker="*")
+    plt.show()
+
+def main():
+    for i in range(10):
+        run()
+
+main()

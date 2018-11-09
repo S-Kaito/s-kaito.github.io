@@ -88,7 +88,7 @@
 				Let's implement (propagation edition)
 			</h2>
 			<div>
-				I'll implement for demonstration of propagation. This time I think I use simple network. Show Figure08. Maybe, you might think that is too simple. But even it can express things such as sin function , cos function and so on. Seeing is believing. Let's implement. Sample01 is source code.
+				I'll implement for demonstration of propagation. This time I think I use simple network. Show Figure08. Maybe, you might think that is too simple. But even it can express things such as sine function , cos function and so on. Seeing is believing. Let's implement. Sample01 is source code.
 			</div>
 			<div>
 				<b>Conditions</b>
@@ -149,7 +149,8 @@ plt.show()
 			<div>
 				The first, I'll explain Layer class and MiddleLayer class which important part of this source code. All layers perform the same operation. So, MiddleLayer class and OutputLayer is extended Layer class. (If you can't understand that I said, I want you to study about extension.When I speak real intention, I do not want to explain it.) __init__ method is the constructor which define first neuron's condition. this.w is weight (Look at Figure02 or Figure03). this.b is bias. They have not learned yet. They are learning when neural network does back propagation. Next, foward method is to do propagation. When Layer class calls foward function, it's doing propagation with identity function. But MiddleLayer doing with figmoid function. It's as stipulated by the conditions. 
 			</div>
-			<pre class="source"><code>
+			<div>
+				<pre class="source"><code>
 class Layer:
     def __init__(this,input_num,output_num):
         this.w = WEIGHT * np.random.randn(input_num,output_num)
@@ -164,14 +165,23 @@ class MiddleLayer(Layer):
         this.y = 1/(1+(np.exp(-this.y)))
 
 </code></pre>
+				<div class="source-title"><b>Sample02(Python)</b></div>
+			</div>
 			<div>
 				The next, I'll explain calcation of neuron. It's easy to use matrix calcation. Propagation can be impermented with this source code. It calcates Figure03.
 			</div>
-			<pre class="source"><code>
+			<div>
+				<pre class="source"><code>
 this.y = np.dot(x,this.w) + this.b
 
 </code></pre>
-			<pre class="source"><code>
+				<div class="source-title"><b>Sample03(Python)</b></div>
+			</div>
+			<div>
+				This is the program which is initializing neurons. This parameters dicides. Try to change parameters to Sample05. You can show sine function.
+			</div>
+			<div>
+				<pre class="source"><code>
 layer.w = np.array([[ 5,2,-5]])
 layer.b = np.array([ 0.1,0.2,-1])
 
@@ -179,8 +189,10 @@ output.w = np.array([9,3,4])
 output.b = np.array([-5])
 
 </code></pre>
-</code></pre>
-			<pre class="source"><code>
+				<div class="source-title"><b>Sample04(Python)</b></div>
+			</div>
+			<div>
+				<pre class="source"><code>
 layer.w = np.array([[ 1.5226207,-4.74313941,-5.09765436]])
 layer.b = np.array([ 0.05025657,0.25530377,-1.12453411])
 
@@ -188,6 +200,9 @@ output.w = np.array([9.01367277,5.04463465,1.2634446 ])
 output.b = np.array([-7.73053153])
 
 </code></pre>
+				<div class="source-title"><b>Sample05(Python)</b></div>
+			</div>
 		</div>
+	</div>
 </body>
 </html>
