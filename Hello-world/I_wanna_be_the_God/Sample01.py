@@ -60,7 +60,6 @@ class LayerSigmoid(Layer):
 
         this.grad_x = np.dot(delta,this.w.T)
 
-
 class LayerSoftmax(Layer):
     def forward(this,x):
         this.x = x
@@ -74,6 +73,21 @@ class LayerSoftmax(Layer):
         this.grad_b = np.sum(delta,axis=0)
 
         this.grad_x = np.dot(delta,this.w.T)
+
+class DropoutLayer(Layer):
+    def __init__(this,p=0.5):
+        this.p = p
+
+    def forward(this,x):
+        rand = np.random.rand(*x.shape)
+        this.dropout = np.where(rand > this.p , 1 , 0)
+        this.y = x * this.dropout
+
+    def backward(this,grad_y):
+        this.grad_x = grad_y * this.dropout
+
+    def update(this):
+        ()
 
 class Creat:
     def __init__(this,brain):
