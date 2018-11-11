@@ -13,7 +13,6 @@ summary {
     margin: -.5em -.5em 0;
     padding: .5em;
 }
-
 details[open] {
     padding: .5em;
 }
@@ -22,17 +21,9 @@ details[open] summary {
     border-bottom: 1px solid #aaa;
     margin-bottom: .5em;
 }
-
 pre{
+	padding-top: 5px;
 	padding-left: 15px;
-	position: relative;
-}
-pre .title{
-	font-family: "Cambria";
-    font-weight: bold;
-	position: absolute;
-	bottom: :0px;
-	left:0px;
 }
 code{
 	font-family: Consolas;
@@ -41,7 +32,6 @@ code{
 .code{
 	position: relative;
 }
-
 .main{
 	background-color: #FCFCFC;
 	border: #000000 solid 1px;
@@ -62,11 +52,14 @@ code{
 }
 .source-title{
     font-weight: bold;
+    background-color: #FAFAFA;
+	border: 1px solid #aaa;
+    padding-left: 5px;
 	position: absolute;
 	bottom: :0px;
-	left:0px;
 	text-align: center;
 }
+
 @media screen and (max-width: 500px) {
      
     .main{
