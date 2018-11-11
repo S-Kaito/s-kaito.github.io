@@ -31,11 +31,15 @@ pre .title{
 	font-family: "Cambria";
     font-weight: bold;
 	position: absolute;
-	top:0px;
-	right:0px;
+	bottom: :0px;
+	left:0px;
 }
 code{
 	font-family: Consolas;
+}
+
+.code{
+	position: relative;
 }
 
 .main{
@@ -57,6 +61,10 @@ code{
     overflow-x: scroll;
 }
 .source-title{
+    font-weight: bold;
+	position: absolute;
+	bottom: :0px;
+	left:0px;
 	text-align: center;
 }
 @media screen and (max-width: 500px) {

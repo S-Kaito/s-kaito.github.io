@@ -150,6 +150,7 @@ plt.show()
 				The first, I'll explain Layer class and MiddleLayer class which important part of this source code. All layers perform the same operation. So, MiddleLayer class and OutputLayer is extended Layer class. (If you can't understand that I said, I want you to study about extension.When I speak real intention, I do not want to explain it.) __init__ method is the constructor which define first neuron's condition. this.w is weight (Look at Figure02 or Figure03). this.b is bias. They have not learned yet. They are learning when neural network does back propagation. Next, foward method is to do propagation. When Layer class calls foward function, it's doing propagation with identity function. But MiddleLayer doing with figmoid function. It's as stipulated by the conditions. 
 			</div>
 			<div>
+				<div class="source-title"><b>Sample02(Python)</b></div>
 				<pre class="source"><code>
 class Layer:
     def __init__(this,input_num,output_num):
@@ -165,22 +166,22 @@ class MiddleLayer(Layer):
         this.y = 1/(1+(np.exp(-this.y)))
 
 </code></pre>
-				<div class="source-title"><b>Sample02(Python)</b></div>
 			</div>
 			<div>
 				The next, I'll explain calcation of neuron. It's easy to use matrix calcation. Propagation can be impermented with this source code. It calcates Figure03.
 			</div>
 			<div>
+				<div class="source-title"><b>Sample03(Python)</b></div>
 				<pre class="source"><code>
 this.y = np.dot(x,this.w) + this.b
 
 </code></pre>
-				<div class="source-title"><b>Sample03(Python)</b></div>
 			</div>
 			<div>
 				This is the program which is initializing neurons. This parameters dicides. Try to change parameters to Sample05. You can show sine function.
 			</div>
-			<div>
+			<div class="code">
+				<div class="source-title"><b>Sample04(Python)</b></div>
 				<pre class="source"><code>
 layer.w = np.array([[ 5,2,-5]])
 layer.b = np.array([ 0.1,0.2,-1])
@@ -189,9 +190,9 @@ output.w = np.array([9,3,4])
 output.b = np.array([-5])
 
 </code></pre>
-				<div class="source-title"><b>Sample04(Python)</b></div>
 			</div>
-			<div>
+			<div class="code">
+				<div class="source-title"><b>Sample05(Python)</b></div>
 				<pre class="source"><code>
 layer.w = np.array([[ 1.5226207,-4.74313941,-5.09765436]])
 layer.b = np.array([ 0.05025657,0.25530377,-1.12453411])
@@ -200,7 +201,18 @@ output.w = np.array([9.01367277,5.04463465,1.2634446 ])
 output.b = np.array([-7.73053153])
 
 </code></pre>
-				<div class="source-title"><b>Sample05(Python)</b></div>
+			</div>
+			<div class="code">
+				<div class="source-title"><b>Sample06(Python)</b></div>
+				<pre class="source"><code>
+for i in INPUT_DATA:
+    layer.forward(np.array([i]).reshape(1,1))
+    output.forward(layer.y)
+
+    plot_x.append(i)
+    plot_y.append(output.y)
+
+</code></pre>
 			</div>
 		</div>
 	</div>
