@@ -149,7 +149,7 @@ plt.show()
 			<div>
 				The first, I'll explain Layer class and MiddleLayer class which important part of this source code. All layers perform the same operation. So, MiddleLayer class and OutputLayer is extended Layer class. (If you can't understand that I said, I want you to study about extension.When I speak real intention, I do not want to explain it.) __init__ method is the constructor which define first neuron's condition. this.w is weight (Look at Figure02 or Figure03). this.b is bias. They have not learned yet. They are learning when neural network does back propagation. Next, foward method is to do propagation. When Layer class calls foward function, it's doing propagation with identity function. But MiddleLayer doing with figmoid function. It's as stipulated by the conditions. 
 			</div>
-			<div>
+			<div class="code">
 				<div class="source-title"><b>Sample02(Python)</b></div>
 				<pre class="source"><code>
 class Layer:
@@ -201,6 +201,9 @@ output.w = np.array([9.01367277,5.04463465,1.2634446 ])
 output.b = np.array([-7.73053153])
 
 </code></pre>
+			</div>
+			<div>
+				This is main function. It instructs to do forwarding and backwarding INPUT_DATA times. And, it saves output data to plot_x and plot_y.
 			</div>
 			<div class="code">
 				<div class="source-title"><b>Sample06(Python)</b></div>

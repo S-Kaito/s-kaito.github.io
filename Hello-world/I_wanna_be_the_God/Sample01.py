@@ -3,6 +3,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+from abc import ABCMeta , abstractmethod
+
 WEIGHT = 0.01
 ETA = 0.1
 EPOCH = 10000
@@ -19,20 +21,23 @@ plot_y = []
 death = []
 deathCount = 0
 
-class Layer:
+class Layer(metaclass=ABCMeta):
     def __init__(this,input_num,output_num):
        this.w = WEIGHT * np.random.randn(input_num,output_num)
        this.b = WEIGHT * np.random.randn(output_num)
 
+    @abstractmethod
     def forward(this,x):
-        ()
+        pass
+
+    @abstractmethod
     def backward(this,x):
-        ()
+        pass
+
     def update(this):
         this.w -= this.grad_w * ETA
         this.b -= this.grad_b * ETA
 
-    
 class LayerIdentity(Layer):
     def forward(this,x):
         this.x = x
@@ -136,7 +141,7 @@ def run():
     MAP = np.random.randint(-10,20,(100,100))
     ANS = np.sum(MAP[10:-10,10:-10])
 
-    creat = Creat([LayerSigmoid(49,50),LayerSigmoid(50,50),LayerSigmoid(50,50),LayerSoftmax(50,5)])
+    creat = Creat([LayerSigmoid(49,150),LayerSigmoid(150,150),LayerSigmoid(150,150),LayerSigmoid(150,150),LayerSoftmax(150,5)])
     creat.load()
     x = 50
     y = 50
@@ -199,7 +204,6 @@ def run():
     plt.show()
 
 def main():
-    for i in range(10):
-        run()
+    run()
 
 main()
