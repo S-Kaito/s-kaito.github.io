@@ -59,6 +59,16 @@ code{
 	bottom: :0px;
 	text-align: center;
 }
+.download{
+    font-weight: bold;
+    background-color: #FAFAFA;
+	border: 1px solid #aaa;
+    padding-right: 5px;
+	position: absolute;
+	top: 2.2em;
+	right : 0px;
+	text-align: center;	
+}
 
 @media screen and (max-width: 500px) {
      

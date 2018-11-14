@@ -99,9 +99,11 @@
 				<img src="Figure08.png" style="border: #000000 solid 2px;">
 				<div><b>Figure08</b></div>
 			</div>
-			<details>
+			<details class="code">
 				<summary>Sample01(python)</summary>
-				<pre><code>
+				<a href="Sample01.py" download="Sample01.py" class="download">Download</a>
+					<pre>
+						<code>
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -139,8 +141,6 @@ for i in INPUT_DATA:
 
     plot_x.append(i)
     plot_y.append(output.y)
-
-print(layer.w)
 
 plt.scatter(plot_x, plot_y, marker="+")
 plt.show()
@@ -203,7 +203,7 @@ output.b = np.array([-7.73053153])
 </code></pre>
 			</div>
 			<div>
-				This is main function. It instructs to do forwarding and backwarding INPUT_DATA times. And, it saves output data to plot_x and plot_y.
+				This is main function. It instructs to do forwarding and backwarding element count of INPUT_DATA times. And, it saves output data to plot_x and plot_y. The final, it shows output data with graph like Figure09.
 			</div>
 			<div class="code">
 				<div class="source-title"><b>Sample06(Python)</b></div>
@@ -215,7 +215,15 @@ for i in INPUT_DATA:
     plot_x.append(i)
     plot_y.append(output.y)
 
+
+plt.scatter(plot_x, plot_y, marker="+")
+plt.show()
+
 </code></pre>
+			</div>
+			<div class="image">
+				<img src="Figure09.png" style="border: #000000 solid 2px;">
+				<div><b>Figure09</b></div>
 			</div>
 		</div>
 	</div>

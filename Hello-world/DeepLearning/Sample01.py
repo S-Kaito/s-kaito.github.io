@@ -1,4 +1,3 @@
-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -36,8 +35,6 @@ for i in INPUT_DATA:
 
     plot_x.append(i)
     plot_y.append(output.y)
-
-print(layer.w)
 
 plt.scatter(plot_x, plot_y, marker="+")
 plt.show()
