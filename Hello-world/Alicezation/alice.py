@@ -68,7 +68,6 @@ class LayerSoftmax(Layer):
 	def forward(this,x):
 		this.x = x
 		this.y = np.dot(x,this.w) + this.b
-		print(this.y)
 		this.y = np.exp(this.y)/np.sum(np.exp(this.y),axis=1,keepdims=True)
 
 	def backward(this,x):  
@@ -94,26 +93,62 @@ class DropoutLayer(Layer):
 	def update(this):
 		()
 
+class Network():
+	def __init__(this,network=[]):
+		this.network = network
+		this.y = 0
+
+	def forward(this,x):
+		this.network[0].forward(x)
+		for i in range(1,len(this.network)):
+			this.network[i].forward(this.network[i - 1].y)
+		this.y = this.network[-1].y
+
+	def backward(this,x):
+		this.network[-1].backward(x)
+		for i in range(len(this.network) - 2,-1,-1):
+			this.network[i].backward(this.network[i + 1].grad_x)
+
+	def update(this):
+		for i in this.network:
+			i.update()
+
+	def save(this,pas="."):
+		for i in range(0,len(this.network)):
+			np.savetxt(pas + '/w0' + str(i) + '.csv', this.network[i].w, delimiter=',')
+			np.savetxt(pas + '/b0' + str(i) + '.csv', this.network[i].b, delimiter=',')
+
+	def load(this,pas = "."):
+		for i in range(0,len(this.network)):
+			this.network[i].w = np.loadtxt(pas + '/w0' + str(i) + '.csv', delimiter=',')
+			this.network[i].b = np.loadtxt(pas + '/b0' + str(i) + '.csv', delimiter=',')
+
 class Creat:
-	def __init__(this,brain):
-		this.brain = brain
+	def __init__(this,network):
+		this.network = network
 		this.map = [np.zeros((1,25)),np.zeros((1,25)),np.zeros((1,25)),np.zeros((1,25))]
 		this.action = [0,1,2,3]
 
 	def forward(this,x):
-		this.brain[0].forward(x)
-		for i in range(1,len(this.brain)):
-			this.brain[i].forward(this.brain[i - 1].y)
-		return this.brain[-1].y
+		this.evaluation = []
+		for j in range(4):
+			a = np.zeros(4).reshape((1,4))
+			a[0][j] = 1
+			this.network.forward(np.hstack((x,a)).reshape((1,29)))
+			this.evaluation.append(this.network.y)
+		
+		a = np.zeros(4).reshape((1,4))
+		print(this.evaluation)
+		a[0][this.evaluation.index(max(this.evaluation))] = 1
+		this.network.forward(np.hstack((x,a)).reshape((1,29)))
+
+		return this.network.y
 
 	def backward(this,x):
-		this.brain[-1].backward(x)
-		for i in range(len(this.brain) - 2,-1,-1):
-			this.brain[i].backward(this.brain[i + 1].grad_x)
+		this.network.backward(x)
 
 	def update(this):
-		for i in this.brain:
-			i.update()
+		this.network.update()
 
 	def memory(this,map,action):
 		this.map.append(map)
@@ -123,16 +158,16 @@ class Creat:
 		for i in range(1,4):
 			a = np.zeros(4)
 			a[this.action[-i]] += point / ((i))
-			this.forward(this.map[-i])
-			this.backward(a)
-			this.update()
+			this.network.forward(this.map[-i])
+			this.network.backward(a)
+			this.network.update()
 
 	def save(this):
-		for i in range(0,len(this.brain)):
-			np.savetxt('w0' + str(i) + '.csv', this.brain[i].w, delimiter=',')
-			np.savetxt('b0' + str(i) + '.csv', this.brain[i].b, delimiter=',')
+		for i in range(0,len(this.network)):
+			np.savetxt('w0' + str(i) + '.csv', this.network[i].w, delimiter=',')
+			np.savetxt('b0' + str(i) + '.csv', this.network[i].b, delimiter=',')
 
 	def load(this):
-		for i in range(0,len(this.brain)):
-			this.brain[i].w = np.loadtxt('w0' + str(i) + '.csv', delimiter=',')
-			this.brain[i].b = np.loadtxt('b0' + str(i) + '.csv', delimiter=',')
+		for i in range(0,len(this.network)):
+			this.network[i].w = np.loadtxt('w0' + str(i) + '.csv', delimiter=',')
+			this.network[i].b = np.loadtxt('b0' + str(i) + '.csv', delimiter=',')

@@ -24,7 +24,8 @@ def run(creat):
 
 	for j in range(EPOCH):
 		creat.forward(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25)/20)
-		creat.memory(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25)/20,np.random.choice(np.array([0,1,2,3]), 1, p= creat.brain[-1].y.reshape(-1)))
+
+		creat.memory(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25)/20,np.random.choice(np.array([0,1,2,3]), 1, p=np.exp(creat.evaluation)/np.sum(np.exp(creat.evaluation)).reshape(-1)))
 
 		
 		if creat.action[-1] == 0:
@@ -70,7 +71,7 @@ def run(creat):
 	plt.show()
 
 def main(args):
-	creat = ac.Creat([ac.LayerSigmoid(25,100),ac.LayerSigmoid(100,100),ac.LayerSigmoid(100,100),ac.LayerSoftmax(100,4)])
+	creat = ac.Creat(ac.Network([ac.LayerSigmoid(29,100),ac.LayerSigmoid(100,100),ac.LayerSigmoid(100,100),ac.LayerIdentity(100,1)]))
 	if "-r" in args:
 		creat.load()
 	
