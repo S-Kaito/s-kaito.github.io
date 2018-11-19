@@ -3,7 +3,7 @@ import tensorflow as tf
 
 from abc import ABCMeta , abstractmethod
 
-WEIGHT = 0.01
+WEIGHT = 0.1
 ETA = 0.1
 
 class Layer(metaclass=ABCMeta):
@@ -135,10 +135,9 @@ class Creat:
 			a = np.zeros(4).reshape((1,4))
 			a[0][j] = 1
 			this.network.forward(np.hstack((x,a)).reshape((1,29)))
-			this.evaluation.append(this.network.y)
+			this.evaluation.append(np.sum(this.network.y))
 		
 		a = np.zeros(4).reshape((1,4))
-		print(this.evaluation)
 		a[0][this.evaluation.index(max(this.evaluation))] = 1
 		this.network.forward(np.hstack((x,a)).reshape((1,29)))
 
@@ -156,10 +155,10 @@ class Creat:
 
 	def learn(this,point):
 		for i in range(1,4):
-			a = np.zeros(4)
-			a[this.action[-i]] += point / ((i))
-			this.network.forward(this.map[-i])
-			this.network.backward(a)
+			a = np.zeros(4).reshape((1,4))
+			a[0][this.action[-i]] = 1
+			this.network.forward(np.hstack((this.map[-i],a)).reshape((1,29)))
+			this.network.backward(point)
 			this.network.update()
 
 	def save(this):
