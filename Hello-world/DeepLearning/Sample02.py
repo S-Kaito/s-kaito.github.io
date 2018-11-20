@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
 INPUT_DATA = np.linspace(-1.0,1.0,100)
-OUTPUT_DATA = np.cos(INPUT_DATA * np.pi)
+OUTPUT_DATA = np.sin(INPUT_DATA * np.pi)
 WEIGHT = 0.1
 EPOCH = 2000
 
@@ -45,13 +45,10 @@ class MiddleLayer(Layer):
 layer = MiddleLayer(1,3)
 output = Layer(3,1)
 
-fig = plt.figure()
-
-img = []
-    
 for j in range(EPOCH):
     plot_x = []
     plot_y = []
+
     for i in INPUT_DATA:
         layer.forward(np.array([i]).reshape(1,1))
         output.forward(layer.y)
@@ -59,18 +56,20 @@ for j in range(EPOCH):
         plot_x.append(i)
         plot_y.append(np.sum(output.y))
 
+    for i in INPUT_DATA:
+        layer.forward(np.array([i]).reshape(1,1))
+        output.forward(layer.y)
+
         output.backward(OUTPUT_DATA[np.where(INPUT_DATA == i)].reshape(1,1))
         layer.backward(output.grad_x)
 
         layer.update()
         output.update()
 
-    if j % (EPOCH / 20) == 0:
-        print(j + (EPOCH / 20)," / ",EPOCH)
+    if (j) % 100 == 0:
+        print(j," / ",EPOCH)
         print(layer.w,layer.b)
         print(output.w,output.b)
         plt.plot(INPUT_DATA,OUTPUT_DATA,linestyle="dashed")
-        line = plt.scatter(plot_x,plot_y,marker="+")
-        img.append(line)
-ani = animation.ArtistAnimation(fig,img)
-plt.show()
+        plt.scatter(plot_x,plot_y,marker="+")
+        plt.show()
