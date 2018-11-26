@@ -62,12 +62,7 @@ def run(creat):
 			plot_y.append(point)
 			death.append(deathCount * 100)
 			error.append(0)
-
-		if j % (EPOCH / 20) == 0:
-			print()
-			print(j," / ",EPOCH,"  POINT:",point,"/",ANS," DEATH:",deathCount)
-			print(np.array(MAP[x - 3:x + 4,y - 3:y + 4]))
-			
+	
 		MAP[0:10,:] = -20
 		MAP[-10:,:] = -20
 		MAP[:,0:10] = -20
