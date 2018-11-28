@@ -82,7 +82,7 @@ class LayerSoftmax(Layer):
 
 		this.grad_x = np.dot(delta,this.w.T)
 
-class DropoutLayer(Layer):
+class LayerDropout(Layer):
 	def __init__(this,p=0.5):
 		this.p = p
 

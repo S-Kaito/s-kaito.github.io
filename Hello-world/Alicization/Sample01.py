@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import random
 import sys
 import tensorflow as tf
 
@@ -13,7 +14,19 @@ EPOCH = 10000
 
 def run(creat):
 
-	MAP = np.random.randint(-19,20,(100,100))
+	MAP = np.zeros((100,100))
+	for i in range(4):
+		xx = random.randint(15,85)
+		yy = random.randint(15,85)
+		for j in range(10):
+			MAP[xx - j * 2:xx + j * 2,yy - j * 2:yy + j * 2] += 2
+
+	for i in range(4):
+		xx = random.randint(15,85)
+		yy = random.randint(15,85)
+		for j in range(10):
+			MAP[xx - j * 2:xx + j * 2,yy - j * 2:yy + j * 2] -= 2
+
 	ANS = np.sum(MAP[MAP > 0])
 
 	x = 50
@@ -62,7 +75,12 @@ def run(creat):
 			plot_y.append(point)
 			death.append(deathCount * 100)
 			error.append(0)
-	
+
+		# if j % (EPOCH / 20) == 0:
+		# 	print()
+		# 	print(j," / ",EPOCH,"  POINT:",point,"/",ANS," DEATH:",deathCount)
+		# 	print(np.array(MAP[x - 3:x + 4,y - 3:y + 4]))
+			
 		MAP[0:10,:] = -20
 		MAP[-10:,:] = -20
 		MAP[:,0:10] = -20
@@ -87,7 +105,8 @@ def main(args):
 	death = []
 	error = []
 	for i in range(N):
-		creat = ac.Creat(ac.Network([ac.LayerSigmoid(25,100),ac.LayerSigmoid(100,100),ac.LayerSigmoid(100,50),ac.LayerIdentity(50,4)]))
+		creat = ac.Creat(ac.Network([ac.LayerSigmoid(25,100),ac.LayerSigmoid(100,50),ac.LayerIdentity(50,4)]))
+		print(i + 1,"/",N)
 		if "-r" in args:
 			creat.load()
 		
