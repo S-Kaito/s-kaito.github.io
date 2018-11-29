@@ -313,7 +313,19 @@ ani = animation.ArtistAnimation(fig,img)
 plt.show()
 </code></pre></details>
 			<div>
-				Most important code is method of backpropagation. The methods forwards error to other neuron. Other neuron which 
+				Most important code is method of backpropagation. The methods forwards error to other neuron. Other neuron approaches parameter "w" and "b". Sample08 is code of backpropagating.
+			</div>
+<div class="code">
+				<div class="source-title"><b>Sample08(Python)</b></div>
+				<pre class="source"><code>
+def backward(this,x):
+    delta = this.y - x
+
+    this.grad_w = np.dot(this.x.T,delta)
+    this.grad_b = np.sum(delta,axis=0)
+
+    this.grad_x = np.dot(delta,this.w.T)
+</code></pre>
 			</div>
 			<h2>
 				Reference
