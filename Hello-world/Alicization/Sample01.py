@@ -14,19 +14,19 @@ EPOCH = 10000
 
 def run(creat):
 
-	MAP = np.zeros((100,100))
-	for i in range(4):
+	MAP = np.zeros((100,100),dtype=int)
+	
+
+	for i in range(7):
 		xx = random.randint(15,85)
 		yy = random.randint(15,85)
 		for j in range(10):
-			MAP[xx - j * 2:xx + j * 2,yy - j * 2:yy + j * 2] += 2
-
-	for i in range(4):
+			MAP[xx - j:xx + j,yy - j:yy + j] -= 2
+	for i in range(7):
 		xx = random.randint(15,85)
 		yy = random.randint(15,85)
 		for j in range(10):
-			MAP[xx - j * 2:xx + j * 2,yy - j * 2:yy + j * 2] -= 2
-
+			MAP[xx - j:xx + j,yy - j:yy + j] += 2
 	ANS = np.sum(MAP[MAP > 0])
 
 	x = 50
@@ -40,23 +40,32 @@ def run(creat):
 	deathCount = 0
 
 	for j in range(1,EPOCH):
+
+		MAP[0:10,:] = -20
+		MAP[-10:,:] = -20
+		MAP[:,0:10] = -20
+		MAP[:,-10:] = -20
+		MAP[MAP > 20] = 20
+		MAP[MAP < -20] = -20
+
+
 		creat.forward(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25))
 
-		creat.memory(map=np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25),action=np.random.choice([0,1,2,3], 1, p=np.exp(creat.network.y.reshape(-1))/np.sum(np.exp(creat.network.y.reshape(-1))).reshape(-1)))
-		#creat.memory(map=np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25),action=np.argmax(creat.network.y))
+		creat.memory(map=np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25),action=np.sum(np.random.choice([0,1,2,3], 1, p=np.exp(creat.network.y.reshape(-1))/np.sum(np.exp(creat.network.y.reshape(-1))).reshape(-1)).reshape(-1)))
+		#creat.memory(map=np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25),action=np.argmax(creat.network.y.reshape(-1)))
 		
-		if creat.action[-1][0] == 0:
+		if creat.action[-1] == 0:
 			y -= 1
-		elif creat.action[-1][0] == 1:
+		elif creat.action[-1] == 1:
 			y += 1
-		elif creat.action[-1][0] == 2:
+		elif creat.action[-1] == 2:
 			x += 1
-		elif creat.action[-1][0] == 3:
+		elif creat.action[-1] == 3:
 			x -= 1
 
 		point += MAP[x][y]
 
-		error[-1] += (ac.clipping(MAP[x][y]) - ac.clipping(creat.network.y[0][creat.action[-1][0]])) ** 2
+		error[-1] += (ac.clipping(MAP[x][y]) - ac.clipping(creat.network.y[0][creat.action[-1]])) ** 2
 
 		creat.memory(point=MAP[x][y])
 
@@ -81,12 +90,6 @@ def run(creat):
 		# 	print(j," / ",EPOCH,"  POINT:",point,"/",ANS," DEATH:",deathCount)
 		# 	print(np.array(MAP[x - 3:x + 4,y - 3:y + 4]))
 			
-		MAP[0:10,:] = -20
-		MAP[-10:,:] = -20
-		MAP[:,0:10] = -20
-		MAP[:,-10:] = -20
-		MAP[MAP > 20] = 20
-
 	print(np.sum(MAP[MAP > 0]),"/",ANS)
 	print(MAP[10:-10,10:-10])
 	plt.cla()
@@ -95,10 +98,10 @@ def run(creat):
 	plt.scatter(plot_x,error[0:-1],marker="o")
 	
 	creat.learn()
-
-	return plt,(plot_y[-1],death[-1],mean(error))
+	return plt,(plot_y[-1],death[-1],mean(error)),MAP
 
 def main(args):
+
 	N = 1 if ("-t" not in args) else int(args[int(args.index('-t')) + 1])
 	plot_x= []
 	point = []
@@ -110,13 +113,14 @@ def main(args):
 		if "-r" in args:
 			creat.load()
 		
-		plt,result = run(creat)
+		plt,result,MAP = run(creat)
 		plot_x.append(i + 1)
 		point.append(result[0])
 		death.append(result[1])
 		error.append(result[2])
 		if "-show-all" in args or i == N - 1:
 			plt.show()
+			ac.viewMAP(MAP)
 
 		if "-w" in args:
 			creat.save()

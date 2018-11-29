@@ -1,6 +1,8 @@
 import numpy as np
 import random
+import sys
 import tensorflow as tf
+import tkinter
 
 from abc import ABCMeta , abstractmethod
 
@@ -9,6 +11,30 @@ ETA = 0.01
 
 def clipping(point):
 	return 1 if point > 0 else (-1 if point < 0 else 0)
+
+def viewMAP(MAP):
+	root = tkinter.Tk()
+	root.title("MAP result")
+	root.geometry("500x500")
+
+	canvas = tkinter.Canvas(root, width = 500, height = 500)#Canvasの作成
+	
+	for i in range(100):
+		for j in range(100):
+			if MAP[i][j] < -10:
+				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF0000')#塗りつぶし
+			elif MAP[i][j] < 0:
+				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF8888')#塗りつぶし
+			elif MAP[i][j] == 0:
+				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FFFFFF')#塗りつぶし
+			elif MAP[i][j] < 10:
+				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#88FF88')#塗りつぶし
+			else:
+				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#00FF00')
+
+	canvas.place(x=0, y=0)#Canvasの配置
+
+	root.mainloop()
 
 class Layer(metaclass=ABCMeta):
 	def __init__(this,input_num,output_num):
@@ -185,3 +211,4 @@ class Creat:
 
 	def load(this):
 		this.network.load()
+
