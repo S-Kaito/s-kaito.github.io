@@ -496,6 +496,20 @@ for i in INPUT_DATA:
 	plot_x.append(i)
 	plot_y.append(output)
 </code></pre></details>
+			<div>
+				What a wonderful! That long source code became to too shorter! Let's see the Keras, and you will feel useful.
+			</div>
+			<div class="source-title"><b>Sample08(Python)</b></div>
+				<pre class="source"><code>
+model = Sequential()
+model.compile(loss='mean_absolute_error', optimizer="adam")
+model.add(Dense(3,activation="sigmoid",input_shape=(1,)))
+model.add(Dense(1,activation="linear"))
+model.summary()
+</code></pre>
+			<div>
+				
+			</div>
 			<h2>
 				Reference
 			</h2>
