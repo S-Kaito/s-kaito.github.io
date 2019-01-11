@@ -1,40 +1,86 @@
+import copy
+from deap import base
+from deap import creator
+from deap import tools
 import numpy as np
+import random
+import string
+import sys
+import time
 
-POINT_NUMBER = 50
-MAX_X = 100
-MAX_Y = 100
-ROOT_X = []
-ROOT_Y = []
+EPOCH = 1000
 
-POPURATION = 100
+def action(ind):
+	s = "Hello,world!"
+	error = 0
+	for i in range(0,11):
+		if s[i] != ind[i]:
+			error += 1
+	return error,
 
-MUTATION_RATE = 1/100
+def init():
+	return ''.join(random.choices(string.ascii_letters + string.punctuation, k=1))
 
-class Indivisual:
-	def __init__(self):
-		self.genom = np.array([])
-		self.array = np.random.permutation(POINT_NUMBER)
-		a = np.arange(POINT_NUMBER)
-		for i in self.array:
-			print(np.where(a==i))
-			np.append(self.genom,np.where(a == i))
-			np.delete(a,self.array[i])
+def mutate(ind,indpb=0.1):
+	for c in ind:
+		if random.random() < indpb:
+			c = random.choices(string.ascii_letters + string.digits, k=1)
+	
+def main(args):
+	creator.create("FitnessMax", base.Fitness, weights=(-1.0,))
+	creator.create("Individual", list, fitness=creator.FitnessMax)
 
-	def getGenom(self):
-		return self.genom
+	toolbox = base.Toolbox()
 
-	def getArray(self):
-		return self.array
+	toolbox.register("attr_bool", init)
+	toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_bool,len('Hello,world!'))
+	toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
-	def getEvaluation(self):
-		return 0
+	toolbox.register("evaluate", action)
+	toolbox.register("mate", tools.cxUniform,50)
+	toolbox.register("mutate", mutate, indpb=0.1)
+	toolbox.register("select", tools.selTournament, tournsize=3)
 
+	pop = toolbox.population(n=99)
+	CXPB, MUTPB, NGEN = 0.5, 0.2, 40
 
-for i in range(POINT_NUMBER):
-	ROOT_X.append(np.random.randint(MAX_X))
-	ROOT_Y.append(np.random.randint(MAX_Y))
+	fitnesses = list(map(toolbox.evaluate, pop))
+	for ind, fit in zip(pop, fitnesses):
+		ind.fitness.values = fit
 
-ind = Indivisual()
-print(ind.getGenom())
+	print("Start of evolution")
 
+	for episode in range(EPOCH):
 
+		offspring = list(map(toolbox.clone, toolbox.select(pop, len(pop))))
+
+		for child1, child2 in zip(offspring[::2], offspring[1::2]):
+
+			if random.random() < CXPB:
+				toolbox.mate(child1, child2)
+				del child1.fitness.values
+				del child2.fitness.values
+
+		for mutant in offspring:
+
+			if random.random() < MUTPB:
+				toolbox.mutate(mutant)
+				del mutant.fitness.values
+	
+		invalid_ind = [ind for ind in offspring if not ind.fitness.valid]
+		fitnesses = map(toolbox.evaluate, invalid_ind)
+		for ind, fit in zip(invalid_ind, fitnesses):
+			ind.fitness.values = fit
+		
+		pop[:] = offspring
+		
+		fits = [ind.fitness.values for ind in pop]
+		
+		print(episode,"|",''.join(tools.selBest(pop, 1)[0]))
+
+	print("-- End of (successful) evolution --")
+	
+	best_ind = tools.selBest(pop, 1)[0]
+	print("Best individual is %s, %s" % (best_ind, best_ind.fitness.values))
+
+main(sys.argv)
