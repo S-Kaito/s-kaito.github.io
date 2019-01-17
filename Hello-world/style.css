@@ -1,6 +1,7 @@
 body{
 	background-color: #282923;
 	font-family: "Cambria";
+	padding-bottom: 50px;
 }
 details {
 	background-color: #F5F5F5;
@@ -38,7 +39,6 @@ code{
 	margin: 0 auto;
 	padding: 50px;
 	width: 800px;
-
 }
 .image{
 	padding-top: 10px;

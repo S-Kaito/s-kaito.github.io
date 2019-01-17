@@ -16,7 +16,6 @@ def run(creat):
 
 	MAP = np.zeros((100,100),dtype=int)
 	
-
 	for i in range(7):
 		xx = random.randint(15,85)
 		yy = random.randint(15,85)
