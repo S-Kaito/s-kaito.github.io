@@ -1,0 +1,84 @@
+body{
+	background-color: #282923;
+	font-family: "Cambria";
+	padding-bottom: 50px;
+}
+details {
+	background-color: #F5F5F5;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: .5em .5em 0;
+}
+summary {
+    font-weight: bold;
+    margin: -.5em -.5em 0;
+    padding: .5em;
+}
+details[open] {
+    padding: .5em;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: .5em;
+}
+pre{
+	padding-top: 5px;
+	padding-left: 15px;
+}
+code{
+	font-family: Consolas;
+}
+
+.code{
+	position: relative;
+}
+.main{
+	background-color: #FCFCFC;
+	border: #000000 solid 1px;
+	margin: 0 auto;
+	padding: 50px;
+	width: 800px;
+}
+.image{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+}
+.source{
+	background-color: #F5F5F5;
+	border: 1px solid #aaa;
+    overflow-x: scroll;
+}
+.source-title{
+    font-weight: bold;
+    background-color: #FAFAFA;
+	border: 1px solid #aaa;
+    padding-left: 5px;
+	position: absolute;
+	bottom: :0px;
+	text-align: center;
+}
+.download{
+    font-weight: bold;
+    background-color: #FAFAFA;
+	border: 1px solid #aaa;
+    padding-right: 5px;
+	position: absolute;
+	top: 2.2em;
+	right : 0px;
+	text-align: center;	
+}
+
+@media screen and (max-width: 500px) {
+     
+    .main{
+    	padding: 20px;
+    	width: 85%;
+    }
+    img {
+		width:100%;
+		max-width: 100%;
+		height: auto;
+	}
+}

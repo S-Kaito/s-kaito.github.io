@@ -1,135 +1,96 @@
 
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.animation as animation
 import random
 import sys
 import tensorflow as tf
+import itertools
+import os
+import neat
+from neat import nn, population, statistics
 
 from statistics import mean, median,variance,stdev
 
 import alice as ac
 
-EPOCH = 10000
+env = ac.env()
 
-def run(creat):
+def eval_fitness(genomes):
+	for g in genomes:
+		observation = env.reset()
+		# env.render()
+		net = nn.create_feed_forward_phenotype(g)
+		fitness = 0
+		reward = 0
+		frames = 0
+		total_fitness = 0
 
-	MAP = np.zeros((100,100),dtype=int)
-	
-	for i in range(7):
-		xx = random.randint(15,85)
-		yy = random.randint(15,85)
-		for j in range(10):
-			MAP[xx - j:xx + j,yy - j:yy + j] -= 2
-	for i in range(7):
-		xx = random.randint(15,85)
-		yy = random.randint(15,85)
-		for j in range(10):
-			MAP[xx - j:xx + j,yy - j:yy + j] += 2
-	ANS = np.sum(MAP[MAP > 0])
+		for k in range(5):
+			while 1:
+				inputs = observation
 
-	x = 50
-	y = 50
-	point = 0
+				# active neurons
+				output = net.serial_activate(inputs)
 
-	plot_x = []
-	plot_y = []
-	death = []
-	error = [0]
-	deathCount = 0
-
-	for j in range(1,EPOCH):
-
-		MAP[0:10,:] = -20
-		MAP[-10:,:] = -20
-		MAP[:,0:10] = -20
-		MAP[:,-10:] = -20
-		MAP[MAP > 20] = 20
-		MAP[MAP < -20] = -20
+				output = np.clip(output, -1, 1)
+				# print(output)
+				observation, reward, done, info = env.step(np.argmax(output))
 
 
-		creat.forward(np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25))
-
-		creat.memory(map=np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25),action=np.sum(np.random.choice([0,1,2,3], 1, p=np.exp(creat.network.y.reshape(-1))/np.sum(np.exp(creat.network.y.reshape(-1))).reshape(-1)).reshape(-1)))
-		#creat.memory(map=np.array(MAP[x - 2:x + 3,y - 2:y + 3]).reshape(1,25),action=np.argmax(creat.network.y.reshape(-1)))
-		
-		if creat.action[-1] == 0:
-			y -= 1
-		elif creat.action[-1] == 1:
-			y += 1
-		elif creat.action[-1] == 2:
-			x += 1
-		elif creat.action[-1] == 3:
-			x -= 1
-
-		point += MAP[x][y]
-
-		error[-1] += (ac.clipping(MAP[x][y]) - ac.clipping(creat.network.y[0][creat.action[-1]])) ** 2
-
-		creat.memory(point=MAP[x][y])
-
-		MAP[x][y] = 0
-
-		if (x == 9 or x == 90) or (y == 9 or y == 90):
-			x = 50
-			y = 50
-			deathCount += 1
-			
-		if j % (EPOCH / 100) == 0:
-
-			error[-1] *= 10
-
-			plot_x.append(j)
-			plot_y.append(point)
-			death.append(deathCount * 100)
-			error.append(0)
-
-		# if j % (EPOCH / 20) == 0:
-		# 	print()
-		# 	print(j," / ",EPOCH,"  POINT:",point,"/",ANS," DEATH:",deathCount)
-		# 	print(np.array(MAP[x - 3:x + 4,y - 3:y + 4]))
-			
-	print(np.sum(MAP[MAP > 0]),"/",ANS)
-	print(MAP[10:-10,10:-10])
-	plt.cla()
-	plt.scatter(plot_x,plot_y,marker="+")
-	plt.scatter(plot_x,death,marker="*")
-	plt.scatter(plot_x,error[0:-1],marker="o")
-	
-	creat.learn()
-	return plt,(plot_y[-1],death[-1],mean(error)),MAP
+				fitness += 1
+				frames += 1
+				# env.render()
+				if done or frames > 1000:
+					total_fitness += fitness
+					# print(fitness)
+					observation = env.reset()
+					break
+		# evaluate the fitness
+		g.fitness = total_fitness / 5
+	print(max([genomes[i].fitness for i in range(len(genomes))]))
 
 def main(args):
 
-	N = 1 if ("-t" not in args) else int(args[int(args.index('-t')) + 1])
-	plot_x= []
-	point = []
-	death = []
-	error = []
-	for i in range(N):
-		creat = ac.Creat(ac.Network([ac.LayerSigmoid(25,100),ac.LayerSigmoid(100,50),ac.LayerIdentity(50,4)]))
-		print(i + 1,"/",N)
-		if "-r" in args:
-			creat.load()
-		
-		plt,result,MAP = run(creat)
-		plot_x.append(i + 1)
-		point.append(result[0])
-		death.append(result[1])
-		error.append(result[2])
-		if "-show-all" in args or i == N - 1:
-			plt.show()
-			ac.viewMAP(MAP)
+	local_dir = os.path.dirname(__file__)
+	config_path = os.path.join(local_dir, "env01.config")
 
-		if "-w" in args:
-			creat.save()
+	pop = population.Population(config_path)
+	pop.run(eval_fitness, 2000)
+	winner = pop.statistics.best_genome()
+	del pop
 
-	plt.cla()
-	plt.scatter(plot_x,point,marker="+")
-	plt.scatter(plot_x,death,marker="*")
-	plt.scatter(plot_x,error,marker="o")
-	plt.title("Total Result")
-	plt.xlabel("Times")
-	plt.show()
+	winningnet = nn.create_feed_forward_phenotype(winner)
+
+	streak = 0
+
+	while streak < 100:
+		fitness = 0
+		frames = 0
+		reward = 0
+		observation = env.reset()
+		env.render()
+		while 1:
+			inputs = observation
+
+			# active neurons
+			output = winningnet.serial_activate(inputs)
+			output = np.clip(output, -1, 1)
+			# print(output)
+			observation, reward, done, info = env.step(np.argmax(output))
+
+			fitness += 1
+
+			env.render()
+			frames += 1
+
+			if done or frames > 2000:
+				print(fitness)
+				print ('streak: ', streak)
+				if fitness >= 170:
+						streak += 1
+				else:
+					streak = 0
+
+				break
+	print("completed!")
 
 main(sys.argv)

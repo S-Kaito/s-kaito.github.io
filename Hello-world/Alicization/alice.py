@@ -8,207 +8,93 @@ from abc import ABCMeta , abstractmethod
 
 WEIGHT = 0.1
 ETA = 0.01
+class env:
+	def __init__(this):
+		this.map = np.zeros((100,100),dtype=int)
+		this.x = 50
+		this.y = 50
+		this.turn = 0
 
-def clipping(point):
-	return 1 if point > 0 else (-1 if point < 0 else 0)
+		this.width = 100
+		this.height = 100
+		this.reset()
 
-def viewMAP(MAP):
-	root = tkinter.Tk()
-	root.title("MAP result")
-	root.geometry("500x500")
+	def reset(this):
+		this.map = np.zeros((100,100),dtype=int)
+		for i in range(7):
+			xx = random.randint(15,85)
+			yy = random.randint(15,85)
+			for j in range(10):
+				this.map[xx - j:xx + j,yy - j:yy + j] -= 2
+		for i in range(7):
+			xx = random.randint(15,85)
+			yy = random.randint(15,85)
+			for j in range(10):
+				this.map[xx - j:xx + j,yy - j:yy + j] += 2
+		ANS = np.sum(this.map[this.map > 0])
 
-	canvas = tkinter.Canvas(root, width = 500, height = 500)#Canvasの作成
-	
-	for i in range(100):
-		for j in range(100):
-			if MAP[i][j] < -10:
-				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF0000')#塗りつぶし
-			elif MAP[i][j] < 0:
-				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF8888')#塗りつぶし
-			elif MAP[i][j] == 0:
-				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FFFFFF')#塗りつぶし
-			elif MAP[i][j] < 10:
-				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#88FF88')#塗りつぶし
-			else:
-				canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#00FF00')
+		this.x = 50
+		this.y = 50
+		this.turn = 0
 
-	canvas.place(x=0, y=0)#Canvasの配置
+		this.width = 100
+		this.height = 100
+		observation = [this.x,this.y]
+		observation += [item for sublist in this.map[this.x - 2:this.x + 3] for item in sublist[this.y - 2:this.y + 3]]
+		return observation
 
-	root.mainloop()
+	def step(this,action):
 
-class Layer(metaclass=ABCMeta):
-	def __init__(this,input_num,output_num):
-	   this.w = WEIGHT * np.random.randn(input_num,output_num)
-	   this.b = WEIGHT * np.random.randn(output_num)
+		observation = None
+		reward = 0
+		done = False
+		info = {}
 
-	@abstractmethod
-	def forward(this,x):
-		pass
-
-	@abstractmethod
-	def backward(this,x):
-		pass
-
-	def update(this):
-		this.w -= this.grad_w * ETA
-		this.b -= this.grad_b * ETA
-
-class LayerIdentity(Layer):
-	def forward(this,x):
-		this.x = x
-		this.y = np.dot(x,this.w) + this.b
-
-	def backward(this,x):
-		delta = this.y - x
-
-		this.grad_w = np.dot(this.x.T,delta)
-		this.grad_b = np.sum(delta,axis=0)
-
-		this.grad_x = np.dot(delta,this.w.T)
-
-class LayerLeakyReLU(Layer):
-	def forward(this,x):
-		this.x = x
-		this.y = np.dot(x,this.w) + this.b
-		this.y = np.where(this.y <= 0,0.01 * this.y,this.y)
-
-	def backward(this,x):
-		delta = np.where(this.y <= 0,0.01,1)
-
-		this.grad_w = np.dot(this.x.T,delta)
-		this.grad_b = np.sum(delta,axis=0)
-
-		this.grad_x = np.dot(delta,this.w.T)
-
-class LayerSigmoid(Layer):
-	def forward(this,x):
-		this.x = x
-		this.y = np.dot(x,this.w) + this.b
-		this.y = 1/(1+(np.exp(-this.y)))
-
-	def backward(this,x):  
-		delta = x * (1 - this.y) * this.y
-
-		this.grad_w = np.dot(this.x.T,delta)
-		this.grad_b = np.sum(delta,axis=0)
-
-		this.grad_x = np.dot(delta,this.w.T)
-
-class LayerSoftmax(Layer):
-	def forward(this,x):
-		this.x = x
-		this.y = np.dot(x,this.w) + this.b
-		this.y = np.exp(this.y)/np.sum(np.exp(this.y),axis=1,keepdims=True)
-
-	def backward(this,x):  
-		delta = this.y - x
-
-		this.grad_w = np.dot(this.x.T,delta)
-		this.grad_b = np.sum(delta,axis=0)
-
-		this.grad_x = np.dot(delta,this.w.T)
-
-class LayerDropout(Layer):
-	def __init__(this,p=0.5):
-		this.p = p
-
-	def forward(this,x):
-		rand = np.random.rand(*x.shape)
-		this.dropout = np.where(rand > this.p , 1 , 0)
-		this.y = x * this.dropout
-
-	def backward(this,grad_y):
-		this.grad_x = grad_y * this.dropout
-
-	def update(this):
-		()
-
-class Network():
-	def __init__(this,network=[]):
-		this.network = network
-		this.y = 0
-
-	def forward(this,x):
-		this.network[0].forward(x)
-		for i in range(1,len(this.network)):
-			this.network[i].forward(this.network[i - 1].y)
-		this.y = this.network[-1].y
-
-	def backward(this,x):
-		this.network[-1].backward(x)
-		for i in range(len(this.network) - 2,-1,-1):
-			this.network[i].backward(this.network[i + 1].grad_x)
-
-	def update(this):
-		for i in this.network:
-			i.update()
-
-	def save(this,pas="."):
-		for i in range(0,len(this.network)):
-			np.savetxt(pas + '/w0' + str(i) + '.csv', this.network[i].w, delimiter=',')
-			np.savetxt(pas + '/b0' + str(i) + '.csv', this.network[i].b, delimiter=',')
-
-	def load(this,pas = "."):
-		for i in range(0,len(this.network)):
-			this.network[i].w = np.loadtxt(pas + '/w0' + str(i) + '.csv', delimiter=',')
-			this.network[i].b = np.loadtxt(pas + '/b0' + str(i) + '.csv', delimiter=',')
-
-class Creat:
-	def __init__(this,network):
-		this.network = network
-		this.map = []
-		this.action = []
-		this.point = []
-
-	def forward(this,x):
-		# for j in range(4):
-		# 	a = np.zeros(4).reshape((1,4))
-		# 	a[0][j] = 1
-		# 	#this.network.forward(np.hstack((x,a)).reshape((1,29)))
-		# 	this.network.forward(x)
-		# 	this.evaluation.append(np.sum(this.network.y))
+		this.map[0:10,:] = -20
+		this.map[-10:,:] = -20
+		this.map[:,0:10] = -20
+		this.map[:,-10:] = -20
+		this.map[this.map > 20] = 20
+		this.map[this.map < -20] = -20
 		
-		# a = np.zeros(4).reshape((1,4))
-		# a[0][this.evaluation.index(max(this.evaluation))] = 1
-		# this.network.forward(np.hstack((x,a)).reshape((1,29)))
-		this.network.forward(x)
+		if action == 0:
+			this.y -= 1
+		elif action == 1:
+			this.y += 1
+		elif action == 2:
+			this.x += 1
+		elif action == 3:
+			this.x -= 1
 
-		return this.network.y
+		reward += this.map[this.x][this.y]
+		this.map[this.x][this.y] = 0
+		observation = [this.x,this.y]
+		observation += [item for sublist in this.map[this.x - 2:this.x + 3] for item in sublist[this.y - 2:this.y + 3]]
+		
+		if (this.x == 5 or this.x == this.width - 5) or (this.y == 5 or this.y == this.height - 5):
+			done = True
+			
+		return observation,reward,done,info
 
-	def backward(this,x):
-		this.network.backward(x)
+	def render(this):
+		root = tkinter.Tk()
+		root.title("this.map result")
+		root.geometry("500x500")
 
-	def update(this):
-		this.network.update()
+		canvas = tkinter.Canvas(root, width = 500, height = 500)#Canvasの作成
+		
+		for i in range(this.width):
+			for j in range(this.height):
+				if this.map[i][j] < -10:
+					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF0000')#塗りつぶし
+				elif this.map[i][j] < 0:
+					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF8888')#塗りつぶし
+				elif this.map[i][j] == 0:
+					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FFFFFF')#塗りつぶし
+				elif this.map[i][j] < 10:
+					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#88FF88')#塗りつぶし
+				else:
+					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#00FF00')
 
-	def memory(this,map=None,action=None,point=None):
-		if map is not None:
-			this.map.append(map)
-		if action is not None:
-			this.action.append(action)
-		if point is not None:
-			this.point.append(point)
-
-	def learn(this,turn=-1):
-		trainData = []
-
-		for i in range(-1,-(turn if turn != -1 else len(this.map)),-1):
-			trainData.append((this.map[i],this.action[i],this.point[i]))
-		random.shuffle(trainData)
-		for j in range(0,int(len(trainData) / 1.2)):
-			a = np.zeros(4).reshape((1,4))
-			a[0][trainData[j][1]] = 1
-			#this.network.forward(np.hstack((trainData[j][0],a)).reshape((1,29)))
-			this.network.forward(trainData[j][0])
-			a[0][trainData[j][1]] = clipping(trainData[j][2])
-			this.network.backward(a)
-			this.network.update()
-		this.map = []
-		this.action = []
-		this.point = []
-	def save(this):
-		this.network.save()
-
-	def load(this):
-		this.network.load()
-
+		canvas.place(x=0, y=0)#Canvasの配置
+		root.mainloop()
