@@ -1,9 +1,13 @@
 var express = require('express')
+var ejs = require('ejs')
+
 var app = express()
 
-app.get('/',(req,res) ->{
-	res.send('Hello,Express!!')
+app.engine('ejs',ejs.renderFile)
+
+app.get('/',(req,res) =>{
+	res.render("index.ejs",{title: "Hello,world!" , content: "Hello,node.js with express!" });
 })
-app.listen(3000,()=>{
+var server = app.listen(3000,()=>{
 	console.log('Start')
 })
