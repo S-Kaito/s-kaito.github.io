@@ -13,7 +13,36 @@
 	<header>Hello, numpy!</header>
 	<div class="wrapper">
 		<h1>Numpyの関数・メソッド一覧(np編)</h1>
-		<div class="index">A</div>
+		<div style="padding:2em;">
+			<input type="button" onclick="location.href='#Q'"value="Q">
+			<input type="button" onclick="location.href='#W'"value="W">
+			<input type="button" onclick="location.href='#E'"value="E">
+			<input type="button" onclick="location.href='#R'"value="R">
+			<input type="button" onclick="location.href='#T'"value="T">
+			<input type="button" onclick="location.href='#Y'"value="Y">
+			<input type="button" onclick="location.href='#U'"value="U">
+			<input type="button" onclick="location.href='#I'"value="I">
+			<input type="button" onclick="location.href='#O'"value="O">
+			<input type="button" onclick="location.href='#P'"value="P"><br>
+			<input style="margin-left: 10px" type="button" onclick="location.href='#A'"value="A">
+			<input type="button" onclick="location.href='#S'"value="S">
+			<input type="button" onclick="location.href='#D'"value="D">
+			<input type="button" onclick="location.href='#F'"value="F">
+			<input type="button" onclick="location.href='#G'"value="G">
+			<input type="button" onclick="location.href='#H'"value="H">
+			<input type="button" onclick="location.href='#J'"value="J">
+			<input type="button" onclick="location.href='#K'"value="K">
+			<input type="button" onclick="location.href='#L'"value="L"><br>
+			<input style="margin-left: 20px"  type="button" onclick="location.href='#Z'"value="Z">
+			<input type="button" onclick="location.href='#X'"value="X">
+			<input type="button" onclick="location.href='#C'"value="C">
+			<input type="button" onclick="location.href='#V'"value="V">
+			<input type="button" onclick="location.href='#B'"value="B">
+			<input type="button" onclick="location.href='#N'"value="N">
+			<input type="button" onclick="location.href='#M'"value="M"><br>
+		</div>
+
+		<div class="index" id="A">A</div>
 		<div class="block">
 			<div class="main">
 				arange<br>
@@ -58,7 +87,7 @@
 			</div>
 		</div>
 
-		<div class="index">D</div>
+		<div class="index" id="D">D</div>
 		<div class="block">
 			<div class="main">
 				dot<br>
@@ -75,7 +104,7 @@
 			</div>
 		</div>
 
-		<div class="index">F</div>
+		<div class="index" id="F">F</div>
 		<div class="block">
 			<div class="main">
 				full<br>
@@ -93,8 +122,9 @@
 			</div>
 		</div>
 		
-		<div class="index">M</div>
-		<div class="main">
+		<div class="index" id="M">M</div>
+		<div class="block">
+			<div class="main">
 				max<br>
 				n max(array,axis=None)
 			</div>
@@ -108,7 +138,8 @@
 				      (axisを指定した場合はintではなくndarray)<br>
 			</div>
 		</div>
-		<div class="main">
+		<div class="block">
+			<div class="main">
 				mean<br>
 				n mean(array,axis=None)
 			</div>
@@ -123,7 +154,8 @@
 			</div>
 		</div>
 		
-		<div class="main">
+		<div class="block">
+			<div class="main">
 				min<br>
 				n min(array,axis=None)
 			</div>
@@ -138,8 +170,9 @@
 			</div>
 		</div>
 
-		<div class="index">N</div>
-		<div class="main">
+		<div class="index" id="N">N</div>
+		<div class="block">
+			<div class="main">
 				nanmax<br>
 				n nanmax(array,axis=None)
 			</div>
@@ -153,7 +186,8 @@
 				      (axisを指定した場合はintではなくndarray)<br>
 			</div>
 		</div>
-		<div class="main">
+		<div class="block">
+			<div class="main">
 				nanmin<br>
 				n nanmin(array,axis=None)
 			</div>
@@ -168,7 +202,7 @@
 			</div>
 		</div>
 
-		<div class="index">O</div>
+		<div class="index" id="O">O</div>
 		<div class="block">
 			<div class="main">
 				ones<br>
@@ -185,7 +219,7 @@
 			</div>
 		</div>
 
-		<div class="index">W</div>
+		<div class="index" id="W">W</div>
 		<div class="block">
 			<div class="main">
 				where<br>
@@ -203,7 +237,7 @@
 			</div>
 		</div>
 
-		<div class="index">Z</div>
+		<div class="index" id="Z">Z</div>
 		<div class="block">
 			<div class="main">
 				zeros<br>

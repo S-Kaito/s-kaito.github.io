@@ -1,6 +1,7 @@
 body{
 	background-color: #F0F0F0;
 	margin:0;
+	scroll-behavior:smooth;
 }
 header{
 	background-color: #10D810;
