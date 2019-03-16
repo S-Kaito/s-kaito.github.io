@@ -25,7 +25,22 @@
 				パラメータ:<br>
 				  ndarray - numpy配列<br>
 				返り値:<br>
-				  array - Python配列
+				  array - Python配列<br>
+			</div>
+		</div>
+		<div class="block">
+			<div class="main">
+				argmax<br>
+				n argmax(array,axis=None)
+			</div>
+			<div class="detail">
+				numpy配列の最大値の番地を取得する<br>
+				<br>
+				パラメータ:<br>
+				  array - numpy配列<br>
+				返り値:<br>
+				  n - 最大値がある番地<br>
+				      (axisを指定した場合はintではなくndarray)<br>
 			</div>
 		</div>
 		<div class="block">
@@ -39,24 +54,127 @@
 				パラメータ:<br>
 				  array - Python配列<br>
 				返り値:<br>
-				  ndarray - numpy配列
+				  ndarray - numpy配列<br>
 			</div>
 		</div>
+
 		<div class="index">D</div>
 		<div class="block">
 			<div class="main">
-				arange<br>
-				array arange(ndarray)
+				dot<br>
+				ndarray dot(ndarray1,ndarray2)
 			</div>
 			<div class="detail">
-				numpyの配列(ndarray)をPythonのarrayに変換する<br>
+				行列積の計算をする<br>
 				<br>
 				パラメータ:<br>
-				  ndarray - numpy配列<br>
+				  ndarray1 - numpy配列<br>
+				  ndarray2 - numpy配列<br>
 				返り値:<br>
-				  array - Python配列
+				  ndarray - 計算済みのnumpy配列<br>
+			</div>
+		</div>
+
+		<div class="index">F</div>
+		<div class="block">
+			<div class="main">
+				full<br>
+				ndarray full(shape,value)
+			</div>
+			<div class="detail">
+				valueで初期化されたnumpy配列を生成する<br>
+				<br>
+				パラメータ:<br>
+				  shape - intなら長さshapeのnumpy配列<br>
+				          tupleなら形shapeのnumpy配列<br>
+				  value - 初期値
+				返り値:<br>
+				  ndarray - 初期化されたnumpy配列<br>
 			</div>
 		</div>
 		
+		<div class="index">M</div>
+		<div class="main">
+				max<br>
+				n max(array,axis=None)
+			</div>
+			<div class="detail">
+				numpy配列の最大値を取得する<br>
+				<br>
+				パラメータ:<br>
+				  array - numpy配列<br>
+				返り値:<br>
+				  n - 最大値<br>
+				      (axisを指定した場合はintではなくndarray)<br>
+			</div>
+		</div>
+
+		<div class="index">N</div>
+		<div class="main">
+				nanmax<br>
+				n nanmax(array,axis=None)
+			</div>
+			<div class="detail">
+				numpy配列の最大値をNaNを無視して取得する<br>
+				<br>
+				パラメータ:<br>
+				  array - numpy配列<br>
+				返り値:<br>
+				  n - 最大値<br>
+				      (axisを指定した場合はintではなくndarray)<br>
+			</div>
+		</div>
+
+		<div class="index">O</div>
+		<div class="block">
+			<div class="main">
+				ones<br>
+				ndarray one(shape)
+			</div>
+			<div class="detail">
+				1で初期化されたnumpy配列を生成する<br>
+				<br>
+				パラメータ:<br>
+				  shape - intなら長さshapeのnumpy配列<br>
+				          tupleなら形shapeのnumpy配列<br>
+				返り値:<br>
+				  ndarray - 初期化されたnumpy配列<br>
+			</div>
+		</div>
+
+		<div class="index">W</div>
+		<div class="block">
+			<div class="main">
+				where<br>
+				ndarray where(conditions,x,y)
+			</div>
+			<div class="detail">
+				条件に合うかどうかで値が変わっているnumpy配列を生成する<br>
+				<br>
+				パラメータ:<br>
+				  conditions - 条件文<br>
+				  x - 条件がTrueの所に代入される値<br>
+				  y - 条件がFalseの所に代入される値<br>
+				返り値:<br>
+				  ndarray - 初期化されたnumpy配列<br>
+			</div>
+		</div>
+
+		<div class="index">Z</div>
+		<div class="block">
+			<div class="main">
+				zeros<br>
+				ndarray zeros(shape)
+			</div>
+			<div class="detail">
+				0で初期化されたnumpy配列を生成する<br>
+				<br>
+				パラメータ:<br>
+				  shape - intなら長さshapeのnumpy配列<br>
+				          tupleなら形shapeのnumpy配列<br>
+				返り値:<br>
+				  ndarray - 初期化されたnumpy配列<br>
+			</div>
+		</div>
 	</div>
 </body>
