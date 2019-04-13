@@ -1,5 +1,5 @@
 body{
-	background-color: #A0C0E0;
+	background-color: #C0E0F5;
 	font-family: "Times New Roman";
 	margin:0;
 	padding:0;
@@ -22,6 +22,7 @@ header{
 	border: inset thin #000000;
 	float:left;
 	font-size: 20px;
+	margin-bottom:100px;
 	padding:20px;
 	width:500px;
 }
@@ -29,6 +30,20 @@ header{
 	background-color: #f0f0f0;
 	border: inset thin #000000;
 	float:right;
+	margin-bottom:100px;
 	padding: 20px;
 	width:500px;
+}
+@media screen and (max-width:500px){
+	.wrapper{
+		width:95%;
+	}
+	.English{
+		float:none;
+		width: 90%;
+	}
+	.Japanese{
+		float:none;
+		width: 90%;
+	}
 }
