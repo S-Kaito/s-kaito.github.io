@@ -1,5 +1,6 @@
 
 import numpy as np
+import matplotlib.pyplot as plt
 import random
 import sys
 import tensorflow as tf
@@ -13,6 +14,7 @@ from statistics import mean, median,variance,stdev
 import alice as ac
 
 env = ac.env()
+fig = plt.figure()
 
 def eval_fitness(genomes):
 	for g in genomes:
@@ -36,7 +38,7 @@ def eval_fitness(genomes):
 				observation, reward, done, info = env.step(np.argmax(output))
 
 
-				fitness += 1
+				fitness += reward
 				frames += 1
 				# env.render()
 				if done or frames > 1000:
@@ -63,9 +65,8 @@ def main(args):
 	streak = 0
 
 	while streak < 100:
-		fitness = 0
-		frames = 0
-		reward = 0
+		ani = []
+		fitness,frame,reward = 0,0,0
 		observation = env.reset()
 		env.render()
 		while 1:
@@ -79,7 +80,7 @@ def main(args):
 
 			fitness += 1
 
-			env.render()
+			ani.append(plt.plot(env.render()))
 			frames += 1
 
 			if done or frames > 2000:
@@ -91,6 +92,9 @@ def main(args):
 					streak = 0
 
 				break
+		animation.ArtistAnimation(fig, ani, interval=100)
+		plt.show()
+
 	print("completed!")
 
 main(sys.argv)

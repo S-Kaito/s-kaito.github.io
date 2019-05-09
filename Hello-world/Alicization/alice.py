@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 import random
 import sys
 import tensorflow as tf
@@ -77,24 +78,19 @@ class env:
 		return observation,reward,done,info
 
 	def render(this):
-		root = tkinter.Tk()
-		root.title("this.map result")
-		root.geometry("500x500")
-
-		canvas = tkinter.Canvas(root, width = 500, height = 500)#Canvasの作成
 		
-		for i in range(this.width):
-			for j in range(this.height):
-				if this.map[i][j] < -10:
-					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF0000')#塗りつぶし
-				elif this.map[i][j] < 0:
-					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FF8888')#塗りつぶし
-				elif this.map[i][j] == 0:
-					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#FFFFFF')#塗りつぶし
-				elif this.map[i][j] < 10:
-					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#88FF88')#塗りつぶし
-				else:
-					canvas.create_rectangle(i * 5, j * 5, i * 5 + 5,j * 5 + 5, fill = '#00FF00')
+		mapData = []
 
-		canvas.place(x=0, y=0)#Canvasの配置
-		root.mainloop()
+		for i in range(this.width):
+			row = []
+			for j in range(this.height):
+				tip = [255,255,255]
+				if this.map[i][j] < 0:
+					tip = [255 * (this.map[i][j] / -20),0,0]
+				elif this.map[i][j] > 0:
+					tip = [0,255 * (this.map[i][j] / 20),0]
+				if this.x == i and this.y == j:
+					tip = [0,0,255]
+				row.append(tip)
+			mapData.append(row)
+		return mapData
