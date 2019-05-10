@@ -41,7 +41,17 @@
 			<input type="button" onclick="location.href='#N'"value="N">
 			<input type="button" onclick="location.href='#M'"value="M"><br>
 		</div>
-
+		<div class="index" id="C">C</div>
+		<div class="block">
+			<div class="main">
+				Conv2D()
+			</div>
+			<div class="detail">
+				画像などの二次元データの畳み込みを行う<br>
+				filter:出力空間の次元
+				kernel_size:畳み込みの縦と横のサイズ
+			</div>
+		</div>
 		<div class="index" id="D">D</div>
 		<div class="block">
 			<div class="main">
@@ -63,7 +73,16 @@
 				 seed = 乱数のシード値<br>
 			</div>
 		</div>
+
 		<div class="index" id="G">G</div>
+		<div class="block">
+			<div class="main">
+				GrobalAveragePooling1D()
+			</div>
+			<div class="detail">
+				時系列データのアベレージプーリング演算<br>
+			</div>
+		</div>
 		<div class="block">
 			<div class="main">
 				GrobalAveragePooling2D()
@@ -80,6 +99,16 @@
 			<div class="detail">
 				Long Short Term Memory<br>
 				長期的な依存関係を学習できる
+			</div>
+		</div>
+		<div class="index" id="M">M</div>
+		<div class="block">
+			<div class="main">
+				MaxPooling2D(pool_size=(2,2))
+			</div>
+			<div class="detail">
+				空間データのマックスプーリング<br>
+				pool_size:プーリング演算を行う時の縦横のサイズ
 			</div>
 		</div>
 		<div class="index" id="V">V</div>

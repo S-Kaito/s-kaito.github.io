@@ -1,5 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
 import random
 import sys
 import tensorflow as tf
@@ -86,9 +85,9 @@ class env:
 			for j in range(this.height):
 				tip = [255,255,255]
 				if this.map[i][j] < 0:
-					tip = [255 * (this.map[i][j] / -20),0,0]
+					tip = [255,255 - (this.map[i][j] * -5),255 - (this.map[i][j] * -5)]
 				elif this.map[i][j] > 0:
-					tip = [0,255 * (this.map[i][j] / 20),0]
+					tip =[255 - (this.map[i][j] * 5),255,255 - (this.map[i][j] * 5)]
 				if this.x == i and this.y == j:
 					tip = [0,0,255]
 				row.append(tip)

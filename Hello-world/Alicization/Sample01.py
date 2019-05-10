@@ -1,5 +1,6 @@
 
 import numpy as np
+import matplotlib.animation as animation
 import matplotlib.pyplot as plt
 import random
 import sys
@@ -14,7 +15,6 @@ from statistics import mean, median,variance,stdev
 import alice as ac
 
 env = ac.env()
-fig = plt.figure()
 
 def eval_fitness(genomes):
 	for g in genomes:
@@ -28,7 +28,7 @@ def eval_fitness(genomes):
 
 		for k in range(5):
 			while 1:
-				inputs = observation
+				inputs = observation / 20.0
 
 				# active neurons
 				output = net.serial_activate(inputs)
@@ -51,7 +51,7 @@ def eval_fitness(genomes):
 	print(max([genomes[i].fitness for i in range(len(genomes))]))
 
 def main(args):
-
+	global plt
 	local_dir = os.path.dirname(__file__)
 	config_path = os.path.join(local_dir, "env01.config")
 
@@ -65,8 +65,10 @@ def main(args):
 	streak = 0
 
 	while streak < 100:
-		ani = []
-		fitness,frame,reward = 0,0,0
+		fig = plt.figure()
+		ims = []
+
+		fitness,frames,reward = 0,0,0
 		observation = env.reset()
 		env.render()
 		while 1:
@@ -80,7 +82,8 @@ def main(args):
 
 			fitness += 1
 
-			ani.append(plt.plot(env.render()))
+			im = plt.imshow(env.render())
+			ims.append([im])
 			frames += 1
 
 			if done or frames > 2000:
@@ -92,7 +95,7 @@ def main(args):
 					streak = 0
 
 				break
-		animation.ArtistAnimation(fig, ani, interval=100)
+		ani = animation.ArtistAnimation(fig, ims, interval=250)
 		plt.show()
 
 	print("completed!")
