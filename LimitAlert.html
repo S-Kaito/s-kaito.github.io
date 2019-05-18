@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="ja" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<script>
+		function init(){
+			var arg = new Object;
+			var pair=location.search.substring(1).split('&');
+			for(var i=0;pair[i];i++) {
+			    var kv = pair[i].split('=');
+			    arg[kv[0]]=kv[1];
+			}
+			console.log("Level = " + arg.lv);
+			if(arg.lv == "easy"){
+				for(var i = 1;i < 11;i++){
+					alert(i + "回目の有限アラートです！");
+				}
+				document.getElementById("msg").innerHTML = "おめでとう！easyをクリアしました！<br>次は<a href='LimitAlert.html?lv=normal'>Normal</a>にチャレンジ！！";
+			}
+			if(arg.lv == "normal"){
+				for(var i = 1;i < 11;i++){
+					alert(i + "回目の有限アラートです！");
+				}
+				for(var i = 11;i < 51;i++){
+					alert(i + "回目の有限アラートです！\nここまでは余裕かな？");
+				}
+				for(var i = 51;i < 91;i++){
+					alert(i + "回目の有限アラートです！\nそろそろ辛いかな？");
+				}
+				for(var i = 91;i < 100;i++){
+					alert(i + "回目の有限アラートです！\nぐぬぬ・・・");
+				}
+				document.getElementById("msg").innerHTML = "おめでとう！normalをクリアしました！<br>次は<a href='LimitAlert.html?lv=hard'>Hard</a>にチャレンジ！！";
+			}
+			if(arg.lv == "hard"){
+				for(var i = 1;i < 51;i++){
+					alert(i + "回目の有限アラートです！");
+				}
+				for(var i = 51;i < 101;i++){
+					alert(i + "回目の有限アラートです！\nここまでは余裕かな？");
+				}
+				for(var i = 101;i < 251;i++){
+					alert(i + "回目の有限アラートです！\nなかなかやるなあ");
+				}
+				for(var i = 251;i < 401;i++){
+					alert(i + "回目の有限アラートです！\nこれは手ごわい相手だ・・・");
+				}
+				for(var i = 401;i < 501;i++){
+					alert(i + "回目の有限アラートです！\nこれは、ヤバいぞ！");
+				}
+				document.getElementById("msg").innerHTML = "おめでとう！Hardをクリアしました！<br>次は<a href='LimitAlert.html?lv=unlimited'>Unlimited</a>にチャレンジ！！";
+			}
+			if(arg.lv == "unlimited"){
+				for(var i = 1;i < 101;i++){
+					alert(i + "回目の有限アラートです！");
+				}
+				for(var i = 101;i < 301;i++){
+					alert(i + "回目の有限アラートです！\nお、Unlimited(制限なし)に挑戦者かな？");
+				}
+				for(var i = 301;i < 751;i++){
+					alert(i + "回目の有限アラートです！\nUnlimited、それは終わりのない旅");
+				}
+				for(var i = 751;i < 1101;i++){
+					alert(i + "回目の有限アラートです！\nなんと、ここまでやってくるか・・・");
+				}
+				for(var i = 1101;i < 1801;i++){
+					alert(i + "回目の有限アラートです！\nしかし、この程度では終わらないぞ！");
+				}
+				for(var i = 1801;i < 2301;i++){
+					alert(i + "回目の有限アラートです！\nこれ程の猛者とは・・・");
+				}
+				for(var i = 2301;i < 2501;i++){
+					alert(i + "回目の有限アラートです！\n(　´Д｀)・;'.、ｶﾊｯ");
+				}
+				document.getElementById("msg").innerHTML = "おめでとう！Unlimitedをクリアしました！あなたは有限アラートマスターです！<br>もう無限アラートも怖くないでしょう";
+			}
+		}
+	</script>
+</head>
+<body onload="init()">
+  <h1><a href="">Hello, 有限アラート!!</a></h1>
+  <h3 id="msg"></h3>
+</body>
+</html>
