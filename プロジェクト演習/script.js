@@ -43,7 +43,7 @@ chart.render();
 // }
 
 // gapi.load("client:auth2", function() {
-//   gapi.auth2.init({client_id: "AIzaSyDsALLGV073QfMilPkwsUJfAMrKFI8VWDE"});
+//   gapi.auth2.init({client_id: "AI*** ***DE"});
 // });
 
 // //authenticate().then(loadClient)
