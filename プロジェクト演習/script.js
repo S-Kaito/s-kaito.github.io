@@ -13,3 +13,48 @@ var options = {
 
 var chart = new ApexCharts(document.querySelector("#chart"),options);
 chart.render();
+
+// function authenticate() {
+//   return gapi.auth2.getAuthInstance()
+//       .signIn({scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/spreadsheets.readonly"})
+//       .then(function() { console.log("Sign-in successful"); },
+//             function(err) { console.error("Error signing in", err); });
+// }
+// function loadClient() {
+//   gapi.client.setApiKey("YOUR_API_KEY");
+//   return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/sheets/v4/rest")
+//       .then(function() { console.log("GAPI client loaded for API"); },
+//             function(err) { console.error("Error loading GAPI client for API", err); });
+// }
+// // Make sure the client is loaded and sign-in is complete before calling this method.
+// function execute() {
+//   return gapi.client.sheets.spreadsheets.get({
+//     "spreadsheetId": "1LTyngHx8IoXXXzzqyOdR8joznYvqsHa445BZCzmvGho",
+//     "includeGridData": true,
+//     "ranges": [
+//       "入力一覧!A:D"
+//     ]
+//   })
+//       .then(function(response) {
+//               // Handle the results here (response.result has the parsed body).
+//               console.log("Response", response);
+//             },
+//             function(err) { console.error("Execute error", err); });
+// }
+
+// gapi.load("client:auth2", function() {
+//   gapi.auth2.init({client_id: "AIzaSyDsALLGV073QfMilPkwsUJfAMrKFI8VWDE"});
+// });
+
+// //authenticate().then(loadClient)
+// var data = execute()
+
+// console.log(data.properties.title)
+
+// data.sheets[0].data.forEach(d=>{
+//   d.forEach(rowData =>{
+//     rowData.forEach(values =>{
+//       console.log(value.formattedValue)
+//     })
+//   })
+// })
