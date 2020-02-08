@@ -16,49 +16,24 @@
 	</header>
 	<div class="wrapper">
 		<div id="chart">
-		</div>  
+		</div>
+		<table>
+			<thead>
+				<tr>
+					<th>タイムスタンプ</th>
+					<th>鶏舎番号</th>
+					<th>死亡羽数</th>
+					<th>生産個数</th>
+					<th>生産量</th>
+					<th>飼育採集量</th>
+					<th>規格外卵量</th>
+				</tr>
+			</thead>
+			<tbody id="sheet-data">
+				
+			</tbody>
+		</table>
 	</div>
-	<script src="https://apis.google.com/js/api.js"></script>
-<script>
-  /**
-   * Sample JavaScript code for sheets.spreadsheets.get
-   * See instructions for running APIs Explorer code samples locally:
-   * https://developers.google.com/explorer-help/guides/code_samples#javascript
-   */
-
-  function authenticate() {
-    return gapi.auth2.getAuthInstance()
-        .signIn({scope: "https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly https://www.googleapis.com/auth/spreadsheets https://www.googleapis.com/auth/spreadsheets.readonly"})
-        .then(function() { console.log("Sign-in successful"); },
-              function(err) { console.error("Error signing in", err); });
-  }
-  function loadClient() {
-    gapi.client.setApiKey("YOUR_API_KEY");
-    return gapi.client.load("https://content.googleapis.com/discovery/v1/apis/sheets/v4/rest")
-        .then(function() { console.log("GAPI client loaded for API"); },
-              function(err) { console.error("Error loading GAPI client for API", err); });
-  }
-  // Make sure the client is loaded and sign-in is complete before calling this method.
-  function execute() {
-    return gapi.client.sheets.spreadsheets.get({
-      "spreadsheetId": "1LTyngHx8IoXXXzzqyOdR8joznYvqsHa445BZCzmvGho",
-      "includeGridData": true,
-      "ranges": [
-        "入力一覧!A:D"
-      ]
-    })
-        .then(function(response) {
-                // Handle the results here (response.result has the parsed body).
-                console.log("Response", response);
-              },
-              function(err) { console.error("Execute error", err); });
-  }
-  gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "YOUR_CLIENT_ID"});
-  });
 </script>
-<button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="execute()">execute</button>
-
 </body>
 </html>
