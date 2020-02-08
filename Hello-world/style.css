@@ -70,6 +70,27 @@ code{
 	text-align: center;	
 }
 
+.slide-container{
+	
+}
+.slide-item{
+	width: 100%;
+	height: 450px;
+}
+.slide-iframe{
+	float: left;
+}
+.slide-info{
+	padding-left: 30px;
+	float: right;
+}
+.slide-title{
+
+}
+.slide-desc{
+
+}
+
 @media screen and (max-width: 500px) {
      
     .main{
