@@ -1,4 +1,4 @@
-Seido Kaito's github pages
+Kaito's github pages
 ====
 Overview
 ## What am I?
