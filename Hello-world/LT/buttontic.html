@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Buttontic</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="buttontic.css">
+	<script>
+		function onClick(){
+			alert("hello")
+		}
+	</script>
+</head>
+<body>
+	<div id="page00" class="page title-page">
+		<div class="title">ボタンチックな<br>ボタンを作る！</div>
+		<div class="contents">B3 小山 海渡</div>
+		<div class="back"><a class="jump" href=""></a></div>
+		<div class="next"><a class="jump" href="#page00.5"></a></div>
+	</div>
+
+	<div id="page00.5" class="page self-introduction-page">
+		<div class="title">自己紹介</div>
+		<div class="icon"><img src="../pic/firefox.jpg" alt="Icon"></div>
+		<div class="contents" style="font-size: 40px;">小山 海渡</div>
+		<div class="contents">
+			<br>
+			<br>
+			<br>
+			研究室：小嶋研(感性情報学講座・B6)<br><br>
+			趣味：ゲーム・読書<br><br>
+			ひとこと：「 すべてがFになる 」面白いですよ！！ <br><br><br><br>
+
+			Twitter: <a href="https://twitter.com/SeidoKaito">@SeidoKaito</a><br>
+			Github : <a href="https://github.com/S-Kaito">@S-Kaito</a>
+		</div>
+		<div class="back"><a class="jump" href="#page00"></a></div>
+		<div class="next"><a class="jump" href="#page01"></a></div>
+	</div>
+
+	<div id="page01" class="page content-page">
+		<div class="title">ボタンとは？</div>
+		<div class="contents">押すと動くもの！</div>
+		<div class="back"><a class="jump" href="#page00.5"></a></div>
+		<div class="next"><a class="jump" href="#page02"></a></div>
+	</div>
+
+	<div id="page02" class="page content-page">
+		<div class="title">ボタンとは？</div>
+		<div class="contents">押すと動くもの！</div>
+		<div class="center">
+			<div class="button01" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page01"></a></div>
+		<div class="next"><a class="jump" href="#page03"></a></div>
+	</div>
+
+	<div id="page03" class="page content-page">
+		<div class="title">ボタンとは？</div>
+		<div class="contents">
+			押すと動くもの！
+			<br><br><br><br><br><br><br><br><br><br><br>
+			よりボタンチックにしていこう！！
+		</div>
+		<div class="center">
+			<div class="button01" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page02"></a></div>
+		<div class="next"><a class="jump" href="#page04"></a></div>
+	</div>
+
+	<div id="page04" class="page content-page">
+		<div class="title">01 枠線を付ける</div>
+		<div class="contents">
+			<pre><code>.button{
+	border: 1px solid #a6a6a6; 
+}</code></pre>
+		</div>
+		<div class="center">
+			<div class="button02" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page03"></a></div>
+		<div class="next"><a class="jump" href="#page05"></a></div>
+	</div>
+
+	<div id="page05" class="page content-page">
+		<div class="title">02 マウスカーソルを変えてみる</div>
+		<div class="contents">
+		<pre><code>.button{
+	border: 1px solid #a6a6a6; 
+	cursor: pointer;
+}</code></pre>
+		</div>
+		<div class="center">
+			<div class="button03" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page04"></a></div>
+		<div class="next"><a class="jump" href="#page06"></a></div>
+	</div>
+
+	<div id="page06" class="page content-page">
+		<div class="title">03 :hoverを追加する</div>
+		<div class="contents">
+		<pre><code>.button{
+	border: 1px solid #a6a6a6; 
+	cursor: pointer;
+}
+.button:hover{
+	background-color: #d9d9d9;
+}
+</code></pre>
+		</div>
+		<div class="center">
+			<div class="button04" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page05"></a></div>
+		<div class="next"><a class="jump" href="#page07"></a></div>
+	</div>
+
+	<div id="page07" class="page content-page">
+		<div class="title">04 :activeも追加してみる</div>
+		<div class="contents">
+		<pre><code>.button{
+	border: 1px solid #a6a6a6; 
+	cursor: pointer;
+}
+.button:hover{
+	background-color: #d9d9d9;
+}
+.button:active{
+	background-color: #a6a6a6;
+}</code></pre>
+		</div>
+		<div class="center">
+			<div class="button05" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page06"></a></div>
+		<div class="next"><a class="jump" href="#page08"></a></div>
+	</div>
+
+	<div id="page08" class="page content-page">
+		<div class="title">04 :activeも追加してみる</div>
+		<div class="contents">
+		<pre><code>.button{
+	border: 1px solid #a6a6a6; 
+	cursor: pointer;
+}
+.button:hover{
+	background-color: #d9d9d9;
+}
+.button:active{
+	background-color: #a6a6a6;
+}</code></pre>
+		完成！！
+		</div>
+		<div class="center">
+			<div class="button05" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page07"></a></div>
+		<div class="next"><a class="jump" href="#page09"></a></div>
+	</div>
+
+	<div id="page09" class="page content-page">
+		<div class="title">05 :更に工夫しよう！</div>
+		<div class="contents">
+		<pre><code>.button{
+	background-color: #314077;
+	border: solid 1px #151b33;
+	cursor: pointer;
+	color: #f5f5f5;
+}
+.button:hover{
+	background-color: #d9d9d9;
+}
+.button:active{
+	background-color: #a6a6a6;
+}</code></pre>
+		</div>
+		<div class="center">
+			<div class="button06" onclick="onClick()">ボタン</div>
+		</div>
+		<div class="back"><a class="jump" href="#page08"></a></div>
+		<div class="next"><a class="jump" href="#page10"></a></div>
+	</div>
+
+	<div id="page10" class="page content-page">
+		<div class="title">様々なボタンを見てみよう！</div>
+		<div class="contents">
+		</div>
+		<div class="center">
+			<div class="carrer-select" onclick="onClick()">CarrerSelect</div>
+			<br>
+			<div class="fringe81" onclick="onClick()">Fringe81</div>
+			<br>
+			<div class="valorant" onclick="window.location.href='https://playvalorant.com/ja-jp/'">
+				<div class="valorant-gray-ct"><div class="valorant-gray"></div></div>
+				<div class="valorant-text">valorant</div> 
+			</div>
+			<br>
+			
+			
+		</div>
+		<div class="back"><a class="jump" href="#page09"></a></div>
+		<div class="next"><a class="jump" href="#page11"></a></div>
+	</div>
+
+	<div id="page11" class="page title-page">
+		<div class="title">ご清聴<br>ありがとうございました！</div>
+		<div class="contents">
+		</div>
+		<div class="center">
+		</div>
+		<div class="back"><a class="jump" href="#page10"></a></div>
+		<div class="next"><a class="jump" href=""></a></div>
+	</div>
+</body>
+</html>

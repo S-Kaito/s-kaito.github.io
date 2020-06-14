@@ -1,0 +1,158 @@
+.button01{
+	font-size: 25px;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+}
+.button02{
+	font-size: 25px;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	
+	border: 1px solid #a6a6a6; 
+}
+.button03{
+	font-size: 25px;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	
+	border: 1px solid #a6a6a6;
+	cursor: pointer;
+}
+.button04{
+	font-size: 25px;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	
+	border: 1px solid #a6a6a6;
+	cursor: pointer;
+}
+.button04:hover{
+	background-color: #d9d9d9;
+}
+.button05{
+	font-size: 25px;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	
+	border: 1px solid #a6a6a6;
+	cursor: pointer;
+}
+.button05:hover{
+	background-color: #d9d9d9;
+}
+.button05:active{
+	background-color: #a6a6a6;
+}
+.button06{
+	font-size: 25px;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	
+	background-color: #314077;
+	border: solid 1px #151b33;
+	cursor: pointer;
+	color: #f5f5f5;
+}
+.button06:hover{
+	background-color: #6989ff;
+}
+.button06:active{
+	background-color: #2a3666;
+}
+.carrer-select{
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+	font-size: "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Meiryo, Osaka, "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+	color: #FFFFFF;
+	border: 1px solid #1abc9c;
+	border-radius: 3px;
+	background-color: #1abc9c;
+}
+.carrer-select:hover{
+	background-color: #FFFFFF;
+	color: #1abc9c;
+}
+.fringe81{
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+	font-family: nimbus-sans,sans-serif;
+
+	font-size: 18px;
+	color: #FFFFFF;
+	background-color: #00dc54;
+}
+.fringe81:hover{
+	background-color: #1cb01c;
+	transition-duration: .2s;
+	transition-property: background-color;
+}
+.valorant{
+	position: relative;
+	width: 150px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+
+	font-size: 22px;
+	font-family: DINNextW05-Bold,arial,georgia,sans-serif;
+	color: #ece8e1;
+	background-color: #ff4655;
+	overflow: hidden;
+}
+.valorant-gray-ct{
+	position: absolute;
+	top: 0;
+	left: -200px;
+	width: 350px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+	transition: .3s ease-out;
+}
+.valorant-gray-ct:hover{
+	transition: .3s ease-out;
+	left: -10px;
+}
+.valorant-gray{
+	width: 190px;
+	height: 40px;
+	text-align: center;
+	line-height: 40px;
+	cursor: pointer;
+	background-color: #0f1923;
+
+	transform: skew(-10deg);
+}
+.valorant-text{
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	margin: auto;
+	position: absolute;
+	z-index: 5;
+	pointer-events: none;
+}
+.valorant:hover{
+	
+}
