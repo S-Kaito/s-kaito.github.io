@@ -87,22 +87,30 @@
 	background-color: #FFFFFF;
 	color: #1abc9c;
 }
-.fringe81{
+.github{
 	width: 150px;
 	height: 40px;
 	text-align: center;
 	line-height: 40px;
 	cursor: pointer;
-	font-family: nimbus-sans,sans-serif;
 
-	font-size: 18px;
-	color: #FFFFFF;
-	background-color: #00dc54;
+	border: 1px solid rgba(27,31,35,.2);
+	border-radius: .25em;
+	background-color: #eff3f6;
+	background-image: linear-gradient(-180deg,#fafbfc,#eff3f6 90%);
 }
-.fringe81:hover{
-	background-color: #1cb01c;
-	transition-duration: .2s;
-	transition-property: background-color;
+.github:hover{
+	border-color: rgba(27,31,35,.35);
+	background-color: #e6ebf1;
+	background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);
+	background-position: -.5em;
+
+}
+.github:active{
+	background-color: #e9ecef;
+	background-image: inset 0 .15em .3em rgba(27,31,35,.15);
+	border-color: rgba(27,31,35,.35);
+	box-shadow: inset 0 .15em .3em rgba(27,31,35,.15);
 }
 .valorant{
 	position: relative;
