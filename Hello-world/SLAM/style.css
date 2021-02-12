@@ -5,6 +5,10 @@ html, body{
 	padding: 0;
 }
 
+img{
+	max-width: 400px;
+}
+
 .wrapper{
 	background-color: #ffffff;
 	width: 800px;
