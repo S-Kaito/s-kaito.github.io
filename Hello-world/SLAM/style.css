@@ -1,0 +1,26 @@
+html, body{
+	font-family: Meiryo;
+	background-color: #282923;
+	margin: 0;
+	padding: 0;
+}
+
+.wrapper{
+	background-color: #ffffff;
+	width: 800px;
+	margin: 100px auto;
+	padding: 50px;
+}
+
+.item{
+	margin: 0 0 20px 0;
+}
+
+.item-title{
+	font-size: 25px;
+	font-weight: 700;
+}
+.item-desc{
+	color: #222;
+	font-size: 15px;
+}

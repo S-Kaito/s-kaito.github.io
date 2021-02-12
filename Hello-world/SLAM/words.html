@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>Document</title>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="table"></div>
+		<div class="content">
+			<!-- 
+			div.item>div.item-title+div.item-desc
+			-->
+			<div class="item">
+				<div class="item-title">定式化</div>
+				<div class="item-desc">
+					x: ロボットの位置 <br>
+					q: ランドマークの位置 <br>
+					a: ロボットの制御値 <br>
+					z: ランドマーク計測 <br>
+					d: ロボット位置間の相対位置の計測値 <br>
+				</div>
+			</div>
+			 <div class="item">
+				<div class="item-title">演算子</div>
+				<div class="item-desc">
+					(+): ロボットの位置xの時に制御aを行った後の位置を求める<br>
+							 x2 = x1 (+) a <br>
+					(-): ロボットの位置x1からx2に移動したときの制御値を求める<br>
+							 a = x2 (-) x1 <br>
+				</div>
+			</div>
+
+			<div class="item">
+				<div class="item-title">ICP</div>
+				<div class="item-desc">
+					現在スキャンと参照スキャンの間で、スキャン店の対応付けとロボット位置推定を交互に行うことで、スキャンマッチングを行う方法 <br>
+					現在スキャン：このフレームでスキャンしたデータ <br>
+					参照スキャン：比較対象となるスキャンデータ <br>
+				</div>
+			</div>
+			<div class="item">
+				<div class="item-title">オクルージョン</div>
+				<div class="item-desc">他の物体や自分自身の陰に隠れて見えなくなること</div>
+			</div>
+			<div class="item">
+				<div class="item-title">オドメトリ</div>
+				<div class="item-desc">与えられた初期位置から微小変位を積分して現在位置を求める仕組み</div>
+			</div>
+
+			<div class="item">
+				<div class="item-title">完全SLAM問題</div>
+				<div class="item-desc">ロボット制御値とランドマーク計測値を入力として、ロボット軌道と全ランドマーク位置の推定を行う問題</div>
+			</div>
+			<div class="item">
+				<div class="item-title">共分散行列</div>
+				<div class="item-desc">分散（散らばり具合を表す指標）の概念を多次元確率変数に拡張して行列としたもの。 </div>
+			</div>
+			<div class="item">
+				<div class="item-title">垂直距離</div>
+				<div class="item-desc">
+					一方の点Aから他方の点Bの接線におろした垂線の長さ。これは点Bが直線や滑らかな曲線上にあるときに用いることが出来る。
+				</div>
+			</div>
+			<div class="item">
+				<div class="item-title">スキャンマッチング</div>
+				<div class="item-desc">レーザスキャナで得た点群データの位置合わせによってロボット位置を推定する技術</div>
+			</div>
+			<div class="item">
+				<div class="item-title">ベイズフィルタ</div>
+				<div class="item-desc">ベイズ推論に基づく時系列フィルタの総称。異なるセンサのデータを融合して信頼度の高いデータを推定できる。</div>
+			</div>
+			<div class="item">
+				<div class="item-title">ヘッセ行列</div>
+				<div class="item-desc">多変数の1次元関数f(x)をxで二回微分した行列</div>
+			</div>
+			<div class="item">
+				<div class="item-title">ラプラス近似</div>
+				<div class="item-desc">確率密度関数の最大値付近の形状を正規分布で近似する方法</div>
+			</div>
+			<div class="item">
+				<div class="item-title">ヤコビ行列</div>
+				<div class="item-desc">入出力が行列の関数f(x)をxで偏微分したもの</div>
+			</div>
+			<div class="item">
+				<div class="item-title"></div>
+				<div class="item-desc"></div>
+			</div>
+			<div class="item">
+				<div class="item-title"></div>
+				<div class="item-desc"></div>
+			</div>
+			<div class="item">
+				<div class="item-title"></div>
+				<div class="item-desc"></div>
+			</div>
+			<div class="item">
+				<div class="item-title"></div>
+				<div class="item-desc"></div>
+			</div>
+			<div class="item">
+				<div class="item-title"></div>
+				<div class="item-desc"></div>
+			</div>
+			<div class="item">
+				<div class="item-title"></div>
+				<div class="item-desc"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
