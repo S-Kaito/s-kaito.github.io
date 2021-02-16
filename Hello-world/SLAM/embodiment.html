@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>[2]SLAMシステムの具体化 - SLAM入門</title>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="title">SLAMシステムの具体化</div>
+		<div class="item">
+			<div class="item-title">システム構成の方針</div>
+			<div class="item-desc">
+				<div class="item-subtitle">最適化アプローチ</div>
+				前述(ロボット位置とランドマーク位置の同時推定 参照)の方程式を最小二乗問題として解くもの。これは非線形になるので繰り返し計算で解く。今回は最適化アプローチとして<b>グラフベースSLAM</b>を用いる。
+				この最適化処理は一括処理でありリアルタイム性に欠けるので逐次処理と２段階で構成する。<br>
+				システムは<b>フロントエンド</b>と<b>バックエンド</b>に分かれる。フロントエンドでは地図の逐次生成やデータの対応付け、ループ検出、ポーズグラフ生成などを行う。バックエンドではループとじ込みで必要となるポーズ調整および地図の一括修正を行う。バックエンドの処理は負荷が高いのでフロントエンドとは別のスレッドで実行した方が良い。
+				<div class="figure">
+					<img src="pic/embodiment01.png" alt="">
+					<div class="figure-text">図01 SLAMシステムの構成</div>
+				</div>
+
+				<div class="item-subtitle">本システムの概要	</div>
+				入力：センサとして2Dレーザスキャナとオドメトリを用いる
+			</div>
+		</div>
+			<div class="item">
+				<div class="item-title"></div>
+				<div class="item-desc"></div>
+			</div>
+			div.item>div.item-title+div.item-desc
+			div.item>div.item-title+div.item-desc
+			div.item>div.item-title+div.item-desc
+
+	</div>
+</body>
+</html>
