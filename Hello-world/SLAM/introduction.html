@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>[1]SLAMとは~SLAMの入出力 - SLAM入門</title>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="title">SLAMとは ~ SLAMの入出力</div>
+		<div class="item">
+			<div class="item-title">SLAMとは</div>
+			<div class="item-desc">ロボットが自分で地図を作るための技術。距離センサなどを用いて進行可能な場所を計測し、オドメトリと組み合わせて地図を作成する。しかし、オドメトリやセンサの値には誤差が存在する。そこで、ロボットはセンサから位置の目印となる<b>ランドマーク</b>を計測する。ロボットが移動するとセンサ座標系(=ロボットから見た際の座標)でのランドマークの位置が変わる。それを地図の作成や誤差の修正に用いることで誤差の蓄積しない地図の生成が出来る。</div>
+		</div>
+		<div class="item">
+			<div class="item-title">SLAMで用いる技術</div>
+			<div class="item-desc">
+				<div class="item-subtitle">
+					ランドマーク位置の推定
+				</div>
+				ロボットの位置が分かればランドマークの位置が分かる。ロボット座標系でのランドマークの位置を地図座標系に変換することでランドマークの記録が出来る。
+
+				<div class="item-subtitle">
+					ロボット位置の推定
+				</div>
+				ロボット位置の推定には<b>オドメトリ</b>を用いる。これは与えられた初期位置から微小変位を積分して現在位置を求める仕組みである。例えば車輪の回転数を用いた「車輪オドメトリ」や連続したカメラ画像列から各画像間のカメラ移動量を求める「ビジュアルオドメトリ」が存在する。これの計算は<b>compounding演算子(+)</b>を用いて表す。
+
+				<div class="item-subtitle">
+					ロボット位置とランドマーク位置の同時推定
+				</div>
+				オドメトリには「走行するにつれて誤差が累積する」という問題がある(<b>累積誤差</b>)。これの解消にはランドマークを用いる。地図に登録されたランドマークを用いて自身の位置を逆算する。これの計算には<b>最小二乗法</b>を用いて計算する。しかし、計算式には三角関数を用いているので<b>非線形最小二乗問題</b>となる。
+			</div>
+		</div>
+		<div class="item">
+			<div class="item-title">SLAMの要素技術</div>
+			<div class="item-desc">
+				<div class="item-subtitle">不確実性の扱い</div>
+				センサデータの多くには誤差が含まれており、自己位置推定や地図構築に不確実性をもたらす。誤差には複数種類あるが、ここでは<b>偶然誤差</b>を扱う。偶然誤差とはランダムに発生する誤差で、原因が特定できないものを指す。多くの誤差は<b>正規分布</b>に従うことが知られているので、SLAMでも正規分布を用いてこれを解決する。正規分布に従わない誤差も存在するが、誤差の程度が小さければ正規分布で近似しても問題ない。
+
+				<div class="item-subtitle">データ対応付け</div>
+				データ対応付けとは「別々に計測されたセンサデータで、同じものを対応付けること」を指す。SLAMでは特に「地図に登録されたデータとセンサデータの対応付け」を指す。SLAMではランドマークの識別のための識別子(ICタグ、ビーコンなどのIDを持つもの)が無い。そのため、IDに代わる手として位置制約(現在取得したセンサデータに近いもの)と特徴量(近傍情報から得られる情報やレーザーの反射強度など)を用いる。
+
+				<div class="item-subtitle">センサ融合</div>
+				センサデータを取得した際に十分なデータが得られないことがある。例えばランドマークが少ない・無い、ランドマークの識別ができないなどの状況である。その時にはオドメトリのような他センサの値を用いて補う。
+
+				<div class="item-subtitle">ループ閉じ込み</div>
+				SLAMでは誤差はつきものである。そのため、同じ地点に辿り着いても同じ地点として認識できない場合がある。これは大抵のループ(周回路)で起こる。その結果としてループが閉じず、誤差が蓄積するといった問題がある。そのため、ループ検出も重要な技術となる。ループを検出し、位置の対応付けができるとそこから逆向きにランドマークの位置などを修正できる。
+
+				<div class="figure">
+					<img src="pic/introduction01.png" alt="">
+					<div class="figure-text">図01 ループ閉じ込みの理想と現実</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="item">
+			<div class="item-title">SLAMの入出力</div>
+			<div class="item-desc">
+				<div class="stay-turned"></div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="item-title">参考文献</div>
+			<div class="item-desc">[1]  SLAM入門(オーム社)</div>
+		</div>
+		
+	</div>
+</body>
+</html>
