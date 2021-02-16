@@ -22,16 +22,38 @@
 				</div>
 
 				<div class="item-subtitle">本システムの概要	</div>
-				入力：センサとして2Dレーザスキャナとオドメトリを用いる
+				<b>入力：</b><br>センサとして2Dレーザスキャナとオドメトリを用いる。<br>
+				<b>出力：</b><br>ロボットの移動軌跡と点群地図。<br>
+				<b>ロボット位置とランドマーク一の推定：</b><br>スキャンマッチングを用いて、リアルタイムでロボット位置とランドマーク一を推定する逐次処理(<b>逐次SLAM</b>)を行う。<br>
+				<b>データ対応付け：</b><br>スキャンマッチングの手法であるICPの中で位置制約による対応付けを行う。<br>
+				<b>センサ融合：</b><br>スキャンマッチングによる推定値とオドメトリによる推定値を確率的に融合する。<br>
+				<b>ループ閉じ込み：</b><br>ループ検出とポーズ調整から構成する。ループ検出はスキャンマッチングにより行う。逐次SLAMよりも広い場所を探索し、マッチングスコアの高い場所があればループを検出したとみなす。ポーズ調整はループが閉じた後にロボット軌跡を修正する。<br>
+				<b>地図の管理：</b><br>占有格子地図と同様の仕組みを使って、点群地図を管理する。<br>
 			</div>
 		</div>
-			<div class="item">
-				<div class="item-title"></div>
-				<div class="item-desc"></div>
+		<div class="item">
+			<div class="item-title">グラフベースSLAM</div>
+			<div class="item-desc">
+				<div class="item-subtitle">SLAMのグラフ表現</div>
+				SLAMの構造をグラフで表して定式化するもので<b>完全SLAM問題</b>を表すことが出来る。<br>
+				<i>x</i>: ロボット位置<br>
+				<i>q</i>: ランドマーク位置<br>
+				<i>a</i>: ロボット制御値<br>
+				<i>z</i>: ランドマーク計測<br>
+				<div class="figure">
+					<img src="pic/embodiment02.png" alt="">
+					<div class="figure-text">図02 完全SLAM問題</div>
+				</div>
+				ただし、完全SLAM問題は計算量が膨大なため、グラフを簡略化してポーズ調整という問題にする。
+				<div class="figure">
+					<img src="pic/embodiment03.png" alt="こうご期待">
+					<div class="figure-text">図03 ポーズ調整</div>
+				</div>
 			</div>
-			div.item>div.item-title+div.item-desc
-			div.item>div.item-title+div.item-desc
-			div.item>div.item-title+div.item-desc
+		</div>
+		div.item>div.item-title+div.item-desc
+		div.item>div.item-title+div.item-desc
+		div.item>div.item-title+div.item-desc
 
 	</div>
 </body>
