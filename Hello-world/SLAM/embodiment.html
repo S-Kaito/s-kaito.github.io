@@ -44,17 +44,48 @@
 					<img src="pic/embodiment02.png" alt="">
 					<div class="figure-text">図02 完全SLAM問題</div>
 				</div>
-				ただし、完全SLAM問題は計算量が膨大なため、グラフを簡略化してポーズ調整という問題にする。
+				ただし、完全SLAM問題は計算量が膨大なため、グラフを簡略化してポーズ調整という問題にする。dは<b>拘束</b>と呼ばれ、ロボット位置間の相対位置の計測値です。dはロボットの制御値aとして与えられる事もあれば、他の方法で与えられることもあります。特に、ループ検出を表す場合、dはループ検出によって与えられます。こうして、計算量を減らしてから最小二乗問題に落とし込みます。
 				<div class="figure">
 					<img src="pic/embodiment03.png" alt="こうご期待">
 					<div class="figure-text">図03 ポーズ調整</div>
 				</div>
 			</div>
 		</div>
-		div.item>div.item-title+div.item-desc
-		div.item>div.item-title+div.item-desc
-		div.item>div.item-title+div.item-desc
+		<div class="item">
+			<div class="item-title">完全SLAM問題</div>
+			<div class="item-desc">
+				ここでは、完全SLAM問題を定式化する。定式化を行っていくとなんだかんだで下の二つの式が得られる。<i>(要修正)</i><br>
+				計測モデル：<img src="pic/embodiment_formula01.png" alt=""><br>
+				運動モデル：<img src="pic/embodiment_formula02.png" alt=""><br>
+				完全SLAM問題では計測モデル、運動モデルを正規分布でモデル化して最小二乗問題に変換します。そして、その二乗誤差を最小化するロボット軌跡x[0: t]と地図mを解とします。
+				しかし、地図の共分散は計算するのが難しいため通常は扱いません。
 
+				<div class="item-subtitle">計測モデルの変換</div>
+				まず、<img src="pic/embodiment_formula01.png" alt="">はロボットが位置x_tにいるときに対応付け変数c^i_tで示される地図m内のランドマークを計測するとセンサ計測値z^i_tが得られる尤度です。
+				ここで、尤度<img src="pic/embodiment_formula01.png" alt="">は正規分布に比例した量であると仮定します。すると、次のように表せます。
+				<div><img src="pic/embodiment_formula03.png" alt=""></div>
+				k: 比例定数(簡単のため k=1 とする)<br>
+				q^j_i: 対応付け変数c^i_tによってz^i_tと対応付けられたm内のランドマーク<br>
+
+				<div class="item-subtitle">計測モデルの変換</div>
+				<img src="pic/embodiment_formula02.png" alt="">はロボットが位置x_t-1にいて、ロボットへの制御命令a_tが与えられたときに、ロボットが位置x_tに移動する確率を表しています。概念としては、運動モデルは計測ではなく予測を表します。ただ、実際にはa_tにはオドメトリの計測値が使われます。<img src="pic/embodiment_formula02.png" alt="">も正規分布に比例すると仮定すると次のように表せます。
+				<div><img src="pic/embodiment_formula04.png" alt=""></div>
+
+				それを良い感じにすると<i>(要修正)</i>次の式が出てきます。これは共分散行列で重みづけられた「重みつき最小二乗問題」となります。
+				<div><img src="pic/embodiment_formula05.png" alt=""></div>
+
+				<div class="item-subtitle">ポーズ調整</div>
+				大きな地図ではランドマーク数が数万～数億にもなりえるので完全SLAM問題を直接特には膨大な計算が必要になります。そこで、計算量を減らすために完全SLAM問題をロボット軌跡の推定とランドマークの推定に分離します。<b>ポーズ調整</b>はこのうちのロボット軌跡の推定を行う技術です。具体的には、ロボット位置x_tを変数として時刻sのロボット位置と時刻tのロボット位置の相対位置d_stを定数として、次のような最小二乗問題を構成し、このJを最小化するx_0:tを求めます。
+				<div><img src="pic/embodiment_formula06.png" alt=""></div>
+				この式の右辺第一因子は、時間的に隣接するロボット位置間の拘束であり、その相対位置はオドメトリで得たり、スキャンマッチングで求めたりします。一方右辺第二因子はループに関する拘束を表しています。ループがある場合は、時間的に隣接しないロボット位置の間に拘束が発生します。式中のCはループ検出されたロボット位置x_s, x_tの時刻の対の集合です。<br>
+				ポーズ調整は、完全SLAM問題に比べて精度は劣りますが、処理コストやロバスト性に優れています。
+
+			</div>
+		</div>
+		<div class="item">
+			<div class="item-title">本書におけるグラフベースSLAM</div>
+			<div class="item-desc">(乞うご期待)</div>
+		</div>
 	</div>
 </body>
 </html>
