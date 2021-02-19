@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="style.css">
+	<title>[3]実装(オドメトリによる地図構築) - SLAM入門</title>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="title">実装(オドメトリによる地図構築)</div>
+		<div class="item">
+			<div class="item-title">センサデータの構造</div>
+			<div class="item-desc">
+				本書で扱うレーザスキャナとオドメトリから得られる情報を述べる。
+				<div class="item-subtitle">スキャン</div>
+				レーザスキャナで得られるひとまとまりのデータを<b>スキャン</b>と呼びます。スキャンは次のように回転する各レーザビームの方向Φ_iと距離d_iの列で表されます。<br>
+				<br>
+				(Φ_0, d_0)(Φ_1, d_1)... (Φ_n-1, d_n-1)<br>
+				<br>
+				別の表し方として、方向が等間隔だと仮定して次のように方向を省略する表記もあります。<br>
+				<br>
+				d_0 d_1... d_n-1 <br>
+				この場合、方向の範囲Φ_min, Φmaxと点数nから、方向は次の式で計算されます。<br>
+				<img src="src/implement_formula01.png" alt="">
+				<div class="item-subtitle">オドメトリデータ</div>
+				オドメトリで得られるデータは次のように各時刻におけるロボットの位置(x_i, y_i, Θ_i)の列です。<br>
+				<br>
+				(x_0, y_0, Θ_0) (x_1, y_1, Θ_1) ... (x_n-1, y_n-1, Θ_n-1)<br>
+				<br>
+				オドメトリ周期ごとにオドメトリ値を並べるとロボットの軌跡が得られます。オドメトリ周期は短いほど精度が良くなります。
+
+				<div class="item-subtitle">センサデータ座標系</div>
+				本書ではx軸を前方、y軸を左に向けてロボット座標系を設定します。そして、反時計回りを正の回転角としています。本来はレーザスキャナとロボットの相対位置を求め、それでデータを補正する必要があります。しかし、地図には対して影響が出ないので今回はそのままにします。また、本書ではレーザスキャナは時計回りに0~-360度の値を出力します。そして、それを後ろ向きに設置しています。従って、オドメトリと向きを合わせるために、オフセット角を180度を加えます。
+				<img src="src/implement01.png" alt="">
+
+				<div class="item-subtitle">センサデータの同期</div>
+				スキャンマッチングやセンサ融合を行うには、スキャンとオドメトリデータの同期を取る必要があります。ここで「同期を取る」とは、<b>両データの取得時間を合わせる</b>事を意味します。本書では手軽なタイムスタンプを用います。
+
+			</div>
+		</div>
+		<div class="item">
+			<div class="item-title">オドメトリによる地図構築</div>
+			<div class="item-desc">
+				オドメトリでスキャンを並べただけだと地図はゆがみます。その原因として、オドメトリの累積誤差、オドメトリとスキャナの相対誤差、オドメトリとスキャナの同期づれ等があります。
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>
