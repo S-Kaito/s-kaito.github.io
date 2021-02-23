@@ -68,3 +68,24 @@ img{
 .stay-turned::before{
 	content: "乞うご期待";	
 }
+
+.simple {
+	color: #333;
+	border-collapse:collapse;
+}
+
+.simple > thead{
+	border-bottom: solid 2px #ccc;
+}
+
+.simple > tbody{
+
+}
+
+.simple tbody > tr{
+	border-bottom: solid 1px #ccc;
+}
+
+.simple > tbody > tr > td{
+	text-align: center;
+}
