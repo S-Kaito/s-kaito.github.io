@@ -89,3 +89,9 @@ img{
 .simple > tbody > tr > td{
 	text-align: center;
 }
+
+.icon{
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+}
