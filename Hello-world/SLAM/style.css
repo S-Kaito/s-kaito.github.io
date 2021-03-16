@@ -17,9 +17,6 @@ h2{
 	border-bottom: solid 1px #ccc;
 }
 
-.content{
-}
-
 .comment{
 	font-size: 13px;
 	font-style: italic;
@@ -81,6 +78,30 @@ h2{
 .figure-text{
 	font-weight: 700;
 	text-align: center;
+}
+
+.figure-description{
+	font-size: 13px;
+	width: 70%;
+	margin: 0 auto;
+}
+
+.algorithm{
+	width: 80%;
+	margin: 10px auto;
+}
+
+.algorithm-title{
+	border-top: 3px #333 solid;
+	border-bottom: 1px #333 solid;
+}
+
+.algorithm-content{
+	border-bottom: 1px #333 solid;
+}
+
+.algorithm-content img{
+
 }
 
 .stay-turned{
