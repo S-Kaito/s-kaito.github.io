@@ -55,7 +55,7 @@
 		<div class="item">
 			<div class="item-title">完全SLAM問題</div>
 			<div class="item-desc">
-				ここでは、完全SLAM問題を定式化する。定式化を行っていくとなんだかんだで下の二つの式が得られる。<i>(要修正)</i><br>
+				ここでは、完全SLAM問題を定式化する。定式化を行っていくと下の二つの式が得られる。<i>(要修正)</i><br>
 				計測モデル：<img src="pic/embodiment_formula01.png" alt=""><br>
 				運動モデル：<img src="pic/embodiment_formula02.png" alt=""><br>
 				完全SLAM問題では計測モデル、運動モデルを正規分布でモデル化して最小二乗問題に変換します。そして、その二乗誤差を最小化するロボット軌跡x[0: t]と地図mを解とします。
@@ -72,7 +72,7 @@
 				<img src="pic/embodiment_formula02.png" alt="">はロボットが位置x_t-1にいて、ロボットへの制御命令a_tが与えられたときに、ロボットが位置x_tに移動する確率を表しています。概念としては、運動モデルは計測ではなく予測を表します。ただ、実際にはa_tにはオドメトリの計測値が使われます。<img src="pic/embodiment_formula02.png" alt="">も正規分布に比例すると仮定すると次のように表せます。
 				<div><img src="pic/embodiment_formula04.png" alt=""></div>
 
-				それを良い感じにすると<i>(要修正)</i>次の式が出てきます。これは共分散行列で重みづけられた「重みつき最小二乗問題」となります。
+				それを式変形すると<i>(要修正)</i>次の式が出てきます。これは共分散行列で重みづけられた「重みつき最小二乗問題」となります。
 				<div><img src="pic/embodiment_formula05.png" alt=""></div>
 
 				<div class="item-subtitle">ポーズ調整</div>
